@@ -4,8 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:testing_riverpod/components/colors.dart';
 import 'package:testing_riverpod/components/component.dart';
 import 'package:testing_riverpod/provider%20class/Data%20Class.dart';
-import 'package:testing_riverpod/pages/EmptyCard.dart';
-import 'package:testing_riverpod/pages/cart_page.dart';
+import 'package:testing_riverpod/view/front_end_page_view/EmptyCard.dart';
+import 'package:testing_riverpod/view/front_end_page_view/cart_page.dart';
 
 class CustomCart extends StatelessWidget {
   const CustomCart({

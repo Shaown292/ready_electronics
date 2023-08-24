@@ -1,26 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:testing_riverpod/pages/Cart%20Data.dart';
-import 'package:testing_riverpod/view/Profile%20Page%202.dart';
+
 
 class CartProvider extends ChangeNotifier{
   final List<int> _selectedItems = [];
   List<int> get selectedItems => _selectedItems ;
 
-  // void toggleFavorite(String word) {
-  //   final isExist = _selectedItems.contains(word);
-  //   if (isExist) {
-  //     _selectedItems.remove(word);
-  //   } else {
-  //     _selectedItems.add(word);
-  //   }
-  //   notifyListeners();
-  // }
-  // bool isExist(String word) {
-  //   final isExist = _selectedItems.contains(word);
-  //   return isExist;
-  // }
 
   int _counter=0;
   int get counter => _counter;

@@ -5,9 +5,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:testing_riverpod/components/colors.dart';
-import 'package:testing_riverpod/pages/invoice.dart';
+import 'package:testing_riverpod/view/front_end_page_view/invoice.dart';
 import '../data/order data.dart';
-import '../pages/EmptyCard.dart';
+import '../view/front_end_page_view/EmptyCard.dart';
 import '../provider class/Data Class.dart';
 
 
@@ -91,7 +91,7 @@ class BuildSmallCard extends StatelessWidget {
           ),
           const SizedBox(height: 2.0),
           SizedBox(
-            height: 28.0,
+            height: 33.0,
             child: Center(
               child: Text(
                 productName,

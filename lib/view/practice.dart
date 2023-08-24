@@ -6,8 +6,8 @@ import 'package:testing_riverpod/pages/practice%20details.dart';
 import '../components/CartButton.dart';
 import '../components/colors.dart';
 import '../components/component.dart';
-import '../data/favorite item model.dart';
-import '../pages/Detailed Page.dart';
+import '../Model/favorite item model.dart';
+import 'front_end_page_view/Detailed Page.dart';
 import '../provider class/Data Class.dart';
 
 class Practice extends StatefulWidget {

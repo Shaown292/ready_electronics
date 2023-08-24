@@ -1,7 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:testing_riverpod/pages/order.dart';
+import 'package:testing_riverpod/view/front_end_page_view/order.dart';
 
 import '../components/component.dart';
 

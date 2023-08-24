@@ -1,34 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 import 'package:testing_riverpod/components/component.dart';
-import 'package:testing_riverpod/pages/Cart%20Data.dart';
 import 'package:testing_riverpod/provider%20class/Data%20Class.dart';
 import 'package:testing_riverpod/data/order%20data.dart';
-import 'package:testing_riverpod/pages/AddShippingAddressPage.dart';
-import 'package:testing_riverpod/pages/Checkout%20Page.dart';
+import 'package:testing_riverpod/view/front_end_page_view/AddShippingAddressPage.dart';
+import 'package:testing_riverpod/view/front_end_page_view/Checkout%20Page.dart';
 import 'package:testing_riverpod/provider%20class/home%20Product%20provider.dart';
-import 'package:testing_riverpod/view/Front%20Category%20View.dart';
-import 'package:testing_riverpod/view/Search%20Page.dart';
-import 'package:testing_riverpod/view/SliderView.dart';
-import 'package:testing_riverpod/pages/ProfilePage.dart';
-import 'package:testing_riverpod/view/Splash%20Screen.dart';
-import 'package:testing_riverpod/pages/cart_page.dart';
-import 'package:testing_riverpod/pages/order.dart';
+import 'package:testing_riverpod/view/home_page_features/Front%20Category%20View.dart';
+import 'package:testing_riverpod/view/front_end_page_view/Search%20Page.dart';
+import 'package:testing_riverpod/view/home_page_features/SliderView.dart';
+import 'package:testing_riverpod/view/front_end_page_view/edit_profile_page.dart';
+import 'package:testing_riverpod/view/front_end_page_view/Splash%20Screen.dart';
+import 'package:testing_riverpod/view/front_end_page_view/cart_page.dart';
+import 'package:testing_riverpod/view/front_end_page_view/order.dart';
 import 'package:testing_riverpod/provider%20class/provider%20for%20form%20validation.dart';
-import 'package:testing_riverpod/view/all%20product.dart';
-import 'package:testing_riverpod/view/demo.dart';
-import 'package:testing_riverpod/view/log%20in%20otp.dart';
+import 'package:testing_riverpod/view/home_page_features/all%20product.dart';
+
 import 'package:testing_riverpod/view/practice.dart';
 import 'Model/Slider Model.dart';
 import 'components/colors.dart';
-import 'view/HomePage.dart';
+import 'view/front_end_page_view/HomePage.dart';
 
-void main() async {
-
-  await Hive.initFlutter();
-  var box = await Hive.openBox('cart_box');
+void main() {
   runApp(const MyApp());
 }
 
@@ -44,7 +37,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create:(context)=>CartProvider()),
         ChangeNotifierProvider(create: (context)=> AddDetailsProvider()),
         ChangeNotifierProvider(create: (context)=> HomeProductProvider()),
-        ChangeNotifierProvider(create: (context)=> CartProviderData()),
+
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
