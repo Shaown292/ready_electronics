@@ -53,7 +53,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
               width: 300.0,
               decoration: const BoxDecoration(
                 image: DecorationImage(image: AssetImage(
-                  'assets/image/ready_logo.jpg'
+                  'assets/image/ready_logo.png'
                 ),
 
                 ),

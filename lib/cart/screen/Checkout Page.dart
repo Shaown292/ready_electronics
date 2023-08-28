@@ -2,13 +2,19 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
+import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+import 'package:simple_fontellico_progress_dialog/simple_fontico_loading.dart';
+import 'package:testing_riverpod/cart/controller/cart_controller.dart';
+import 'package:testing_riverpod/cart/model/cart_data_display_model.dart';
 import 'package:testing_riverpod/components/component.dart';
 import 'package:testing_riverpod/constants/share_preference_name.dart';
-import 'package:testing_riverpod/constants/static_variable.dart';
+
 import 'package:testing_riverpod/dropdown/controller/dropdown_controller.dart';
 import 'package:testing_riverpod/view/front_end_page_view/AddShippingAddressPage.dart';
+import 'package:testing_riverpod/view/front_end_page_view/HomePage.dart';
 
+import '../../components/progress bar.dart';
 import 'CartButton.dart';
 import '../../components/colors.dart';
 import '../../preferences.dart';
@@ -25,19 +31,24 @@ class CheckOutPage extends StatefulWidget {
 
 class _CheckOutPageState extends State<CheckOutPage> {
 
-  DropdownController? dropdownController;
-  // final String id;
+  DropdownController dropdownController = Get.find();
+  CartController cartController = Get.find();
 
+  @override
+  void initState() {
+    // userInfo();
+    super.initState();
+  }
+
+  // final String id;
   String name = "";
   String address = "";
   String phoneNumber = "";
   String token = "";
+  String areaId= "";
+  String districtId = "";
 
-  @override
-  void initState() {
-    userInfo();
-    super.initState();
-  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -245,29 +256,47 @@ class _CheckOutPageState extends State<CheckOutPage> {
   }
   void userInfo() async{
 
-    name = await MySharedPreferences.getStringData(key: SharedRefName.name)??"";
-    address = await MySharedPreferences.getStringData(key: SharedRefName.address)??"";
-    phoneNumber = await MySharedPreferences.getStringData(key: SharedRefName.number)??"";
+
+    String customerName =  await MySharedPreferences.getStringData(key: SharedRefName.name)??"";
+    String customerAddress =  await MySharedPreferences.getStringData(key: SharedRefName.address)??"";
+    String customerNumber =  await MySharedPreferences.getStringData(key: SharedRefName.number)??"";
+
+    setState(() {
+      name = customerName;
+      phoneNumber = customerNumber;
+      address = customerAddress;
+    });
+
+
+
+
     token = await MySharedPreferences.getStringData(key: SharedRefName.token)??"";
-    String areaID =  dropdownController!.areaId.toString();
-    String districtID = dropdownController!.districtId.toString();
-    bool hasRequiredData = false;
-    print("Area ID is : ${dropdownController!.areaId.toString()}");
-    print("District ID is : ${dropdownController!.districtId.toString()}");
-    if(name.isEmpty || address.isEmpty || phoneNumber.isEmpty){
+    print("Area ID is : ${dropdownController.areaId}");
+    print("District ID is : ${ dropdownController.districtId}");
+
+    if(name.isEmpty || address.isEmpty || phoneNumber.isEmpty || dropdownController.areaId == null || dropdownController.districtId == null){
       Navigator.push(context, MaterialPageRoute(builder: (context)=>const AddShippingAddressPage()));
       print("Order Didn't Placed");
 
     }
     else{
-      hasRequiredData = true;
-      placeOrder(name, phoneNumber,areaID, address, districtID,"nothing", "cash", token.toString());
-    }
+      
+      placeOrder(name, phoneNumber, dropdownController.areaId.toString(), address, dropdownController.districtId.toString(),"", "cash", token.toString());
+
+      // cartController.allProductDelete(productId: );
+      //
+      }
+
   }
 
   void placeOrder(String name, String number, String area, String address, String district, String note, String paymentType, String token) async{
+
+
+    ProgressBar myProgressBar = ProgressBar();
+    myProgressBar.showDialogue(widgetContext: context, message: "Please wait", type: SimpleFontelicoProgressDialogType.phoenix);
+
     try{
-      Response response = await post(
+      http.Response response = await http.post(
         Uri.parse("https://readyelectronics.com.bd/api/v1/customer/order/save"),
         body: {
           'fullName' : name,
@@ -280,8 +309,8 @@ class _CheckOutPageState extends State<CheckOutPage> {
         },
         headers: {
           "customer_id" : 315.toString(),
-          "discount" : "500",
-          "Authorization" : "Bearer ${token.toString()}"
+          "discount" : "0",
+          "Authorization" : "Bearer $token"
         },
       );
 
@@ -290,6 +319,8 @@ class _CheckOutPageState extends State<CheckOutPage> {
       if(response.statusCode==200){
 
         print("oder success");
+        myProgressBar.hideDialogue();
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> HomePage()));
 
         final data = jsonDecode(response.body);
         print("otp data $data");
@@ -298,9 +329,11 @@ class _CheckOutPageState extends State<CheckOutPage> {
       }
       else{
         print("Order Failed");
+        myProgressBar.hideDialogue();
       }
     } catch(e,tr){
       print("order exceptions ${e.toString()}");
+      myProgressBar.hideDialogue();
     }
   }
 

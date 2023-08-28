@@ -5,6 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:simple_fontellico_progress_dialog/simple_fontico_loading.dart';
+import 'package:testing_riverpod/components/progress%20bar.dart';
 import 'package:testing_riverpod/view/home_page_features/Nav_Drawer.dart';
 import 'package:testing_riverpod/components/component.dart';
 import 'package:testing_riverpod/view/front_end_page_view/OTP%20Verification.dart';
@@ -33,6 +35,8 @@ class _LogInOTPState extends State<LogInOTP> {
     super.initState();
   }
   void sentOpt(String phoneNumber) async{
+    ProgressBar myProgressBar = ProgressBar();
+    myProgressBar.showDialogue(widgetContext: context, message: "Please wait for the otp to send", type: SimpleFontelicoProgressDialogType.phoenix);
     try{
       Response response = await post(
         Uri.parse("https://readyelectronics.com.bd/api/v1/customer/login"),
@@ -43,13 +47,19 @@ class _LogInOTPState extends State<LogInOTP> {
 
       if(response.statusCode==200){
         var data = jsonDecode(response.body.toString());
+        myProgressBar.hideDialogue();
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>  OTPVerification(
+          phoneNumber: phoneNumberController.text.toString(),previousScreen: widget.previousScreen,
+        )));
         print(data);
         print("account created");
       }
       else{
         print("Failed");
+        myProgressBar.hideDialogue();
       }
     } catch(e){
+      myProgressBar.hideDialogue();
       print((e).toString());
     }
   }
@@ -123,9 +133,7 @@ class _LogInOTPState extends State<LogInOTP> {
           GestureDetector(
             onTap: () {
               sentOpt(phoneNumberController.text.toString());
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>  OTPVerification(
-                phoneNumber: phoneNumberController.text.toString(),previousScreen: widget.previousScreen,
-              )));
+
               context.read<AddDetailsProvider>().addMobile(phoneNumberController.text.toString());
 
             },

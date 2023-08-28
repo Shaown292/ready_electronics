@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:testing_riverpod/cart/screen/cart_page.dart';
+import 'package:testing_riverpod/components/snack_bar.dart';
 import 'package:testing_riverpod/view/front_end_page_view/AddShippingAddressPage.dart';
 import 'package:testing_riverpod/view/front_end_page_view/HomePage.dart';
 import 'package:testing_riverpod/view/front_end_page_view/edit_profile_page.dart';
@@ -58,6 +59,7 @@ class _OTPVerificationState extends State<OTPVerification> {
 
       }
       else{
+        CustomSnackBar(context: context, text: 'The OTP you provided is not correct', );
         print("Verification Failed");
       }
     } catch(e,tr){

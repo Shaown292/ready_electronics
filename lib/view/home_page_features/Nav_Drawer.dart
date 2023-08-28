@@ -17,6 +17,7 @@ import '../../components/colors.dart';
 import '../../components/progress bar.dart';
 import '../../components/snack_bar.dart';
 import '../../constants/share_preference_name.dart';
+import '../../display order/display_order_screen.dart';
 import '../../preferences.dart';
 import '../front_end_page_view/edit_profile_page.dart';
 import '../front_end_page_view/log in.dart';
@@ -171,7 +172,7 @@ class NavDrawerState extends State<NavDrawer> {
             GestureDetector(
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const OrderPage()));
+                    MaterialPageRoute(builder: (context) => const DisplayOrderScreen()));
               },
               child: const Row(
                 children: [
@@ -403,9 +404,7 @@ class NavDrawerState extends State<NavDrawer> {
   }
   void whereToGO () async{
 
-
     if(isUserLoggedIn) {
-
        logOut();
     }
 

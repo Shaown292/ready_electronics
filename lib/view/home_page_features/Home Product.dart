@@ -54,12 +54,12 @@ class _HomeProductState extends State<HomeProduct> {
                               fontWeight: FontWeight.w500,
                               color: Colors.black,
                             ),
-                            const RobotoText(
-                              text: "View All",
-                              size: 14.0,
-                              fontWeight: FontWeight.normal,
-                              color: custom,
-                            ),
+                            // const RobotoText(
+                            //   text: "View All",
+                            //   size: 14.0,
+                            //   fontWeight: FontWeight.normal,
+                            //   color: custom,
+                            // ),
                           ],
                         ),
                       ),

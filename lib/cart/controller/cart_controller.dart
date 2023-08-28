@@ -220,5 +220,39 @@ class CartController extends GetxController {
 
     }
   }
+
+
+  // Future<void> allProductDelete({required String productId}) async {
+  //
+  //   try{
+  //
+  //     for(int items =0; items < cartDataDisplayModel!.cartData!.length; items++ ) {
+  //
+  //       http.Response response = await http.delete(
+  //         Uri.parse("https://readyelectronics.com.bd/api/v1/cart/delete/$productId"),
+  //
+  //         headers: {
+  //           "customer_id" : 315.toString(),
+  //         },
+  //       );
+  //       if(response.statusCode==200){
+  //
+  //         fetchCartProducts();
+  //       }
+  //       else{
+  //         log("Cart All Data erase failed : ${response.body.toString()}" );
+  //       }
+  //
+  //
+  //     }
+  //
+  //
+  //   } catch(e,tr){
+  //
+  //     log("Cart data erase exceptions : ${e.toString()}" );
+  //
+  //   }
+  // }
+
 }
 

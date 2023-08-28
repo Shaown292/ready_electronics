@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:testing_riverpod/components/component.dart';
 import 'package:testing_riverpod/data/order%20data.dart';
+import 'package:testing_riverpod/display%20order/display_order_screen.dart';
 
 import '../../cart/screen/CartButton.dart';
 import '../../components/colors.dart';
@@ -29,7 +30,7 @@ class _OrderPageState extends State<OrderPage> {
           ),
         ],
       ),
-      body: const MyOrderList(),
+      body: const DisplayOrderScreen(),
     );
   }
 }

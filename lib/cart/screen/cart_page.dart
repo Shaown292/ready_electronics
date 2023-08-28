@@ -75,7 +75,6 @@ class _CartPageState extends State<CartPage> {
                       init: CartController(),
                       builder: (data) {
 
-
                         if(data.isError){
                           return  Center(child: Text(data.errorMessage.toString()),);
                         }
@@ -210,90 +209,90 @@ class _CartPageState extends State<CartPage> {
                             });
                       }),
                 ),
-                Consumer<AddDetailsProvider>(
-                  builder: (BuildContext context, value, Widget? child) {
-                    return SizedBox(
-                      height: 80.0,
-                      width: MediaQuery.of(context).size.width,
-                      child: Card(
-                        elevation: 0.5,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Icon(Icons.location_on, color: custom),
-                                  const SizedBox(
-                                    height: 5.0,
-                                  ),
-                                  Container(
-                                    height: 20.0,
-                                    width: 48.0,
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0),
-                                        color: custom),
-                                    child: const Center(
-                                        child: RobotoText(
-                                      text: "Home",
-                                      size: 11.0,
-                                      fontWeight: null,
-                                      color: Colors.white,
-                                    )),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(width: 20.0),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  RobotoText(
-                                      text: value.name,
-                                      size: 14.0,
-                                      fontWeight: FontWeight.w300,
-                                      color: Colors.black),
-                                  RobotoText(
-                                      text: value.mobile,
-                                      size: 13.0,
-                                      fontWeight: FontWeight.w200,
-                                      color: Colors.black),
-                                  RobotoText(
-                                      text: value.address,
-                                      size: 13.0,
-                                      fontWeight: FontWeight.w200,
-                                      color: Colors.black),
-                                ],
-                              ),
-                              const SizedBox(
-                                width: 40.0,
-                              ),
-                              Container(
-                                height: 24.0,
-                                width: 50.0,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                  color: custom[200],
-                                ),
-                                child: const Center(
-                                  child: RobotoText(
-                                    text: "Change",
-                                    fontWeight: FontWeight.w500,
-                                    color: custom,
-                                    size: 11.0,
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
+                // Consumer<AddDetailsProvider>(
+                //   builder: (BuildContext context, value, Widget? child) {
+                //     return SizedBox(
+                //       height: 80.0,
+                //       width: MediaQuery.of(context).size.width,
+                //       child: Card(
+                //         elevation: 0.5,
+                //         child: Padding(
+                //           padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                //           child: Row(
+                //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //             children: [
+                //               Column(
+                //                 mainAxisAlignment: MainAxisAlignment.center,
+                //                 children: [
+                //                   const Icon(Icons.location_on, color: custom),
+                //                   const SizedBox(
+                //                     height: 5.0,
+                //                   ),
+                //                   Container(
+                //                     height: 20.0,
+                //                     width: 48.0,
+                //                     decoration: BoxDecoration(
+                //                         borderRadius:
+                //                             BorderRadius.circular(5.0),
+                //                         color: custom),
+                //                     child: const Center(
+                //                         child: RobotoText(
+                //                       text: "Home",
+                //                       size: 11.0,
+                //                       fontWeight: null,
+                //                       color: Colors.white,
+                //                     )),
+                //                   ),
+                //                 ],
+                //               ),
+                //               const SizedBox(width: 20.0),
+                //               Column(
+                //                 mainAxisAlignment: MainAxisAlignment.center,
+                //                 crossAxisAlignment: CrossAxisAlignment.center,
+                //                 children: [
+                //                   RobotoText(
+                //                       text: value.name,
+                //                       size: 14.0,
+                //                       fontWeight: FontWeight.w300,
+                //                       color: Colors.black),
+                //                   RobotoText(
+                //                       text: value.mobile,
+                //                       size: 13.0,
+                //                       fontWeight: FontWeight.w200,
+                //                       color: Colors.black),
+                //                   RobotoText(
+                //                       text: value.address,
+                //                       size: 13.0,
+                //                       fontWeight: FontWeight.w200,
+                //                       color: Colors.black),
+                //                 ],
+                //               ),
+                //               const SizedBox(
+                //                 width: 40.0,
+                //               ),
+                //               Container(
+                //                 height: 24.0,
+                //                 width: 50.0,
+                //                 decoration: BoxDecoration(
+                //                   borderRadius: BorderRadius.circular(5.0),
+                //                   color: custom[200],
+                //                 ),
+                //                 child: const Center(
+                //                   child: RobotoText(
+                //                     text: "Change",
+                //                     fontWeight: FontWeight.w500,
+                //                     color: custom,
+                //                     size: 11.0,
+                //                   ),
+                //                 ),
+                //               )
+                //             ],
+                //           ),
+                //         ),
+                //       ),
+                //     );
+                //   },
+                // ),
                 GetBuilder<CartController>(
                     init: CartController(),
                     builder: (priceCalculation) {
@@ -492,34 +491,7 @@ class _CartPageState extends State<CartPage> {
     }
   }
 
-  void removeFromDB(String id) async{
-    try{
-      http.Response response = await http.delete(
-        Uri.parse("https://readyelectronics.com.bd/api/v1/cart/delete/$id"),
 
-        headers: {
-          "customer_id": 315.toString(),
-          "Authorization" : "Bearer ${SharedRefName.token}"
-        },
-      );
-
-      print("id : $id");
-
-      print("Deletion response ${response.body}");
-      if(response.statusCode==200){
-
-        print("Deletion success");
-
-        final data = jsonDecode(response.body);
-
-      }
-      else{
-        print("Deletion Failed");
-      }
-    } catch(e,tr){
-      print("otp verification exceptions ${e.toString()}");
-    }
-  }
 
 }
 

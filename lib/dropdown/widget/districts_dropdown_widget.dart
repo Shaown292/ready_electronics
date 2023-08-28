@@ -62,8 +62,8 @@ class _DistrictsDropdownWidgetState extends State<DistrictsDropdownWidget> {
             onChanged: (v) {
               setState(() {
                 districtName.text = v!.name.toString();
-                districts.fetchAreas(v.id.toString());
                 districts.districtId = v.id.toString();
+                districts.fetchAreas(v.id.toString());
 
               });
             });

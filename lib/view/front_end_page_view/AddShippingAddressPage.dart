@@ -241,8 +241,7 @@ class _AddShippingAddressPageState extends State<AddShippingAddressPage> {
                         String address = addressController.text;
                         MySharedPreferences.setStringData(key: SharedRefName.name, data: name);
                         MySharedPreferences.setStringData(key:SharedRefName.address, data: address);
-                        print("Name is : $name");
-                        print("Address is : $address");
+
                         userLoggedIn();
                       },
                       child: Center(
@@ -269,7 +268,7 @@ class _AddShippingAddressPageState extends State<AddShippingAddressPage> {
   void userLoggedIn() async{
 
     var isLogIn =await MySharedPreferences.getBoolData(key: SharedRefName.isLoggedIn);
-   // bool isLogIn = true;
+
 
     if (isLogIn == true) {
 

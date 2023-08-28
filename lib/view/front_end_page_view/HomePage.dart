@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:testing_riverpod/cart/controller/cart_controller.dart';
 import 'package:testing_riverpod/data/local%20data/favorite%20data.dart';
+import 'package:testing_riverpod/display%20order/display_order_controller.dart';
+import 'package:testing_riverpod/dropdown/controller/dropdown_controller.dart';
 
 import 'package:testing_riverpod/view/home_page_features/Brand%20View.dart';
 import 'package:testing_riverpod/view/home_page_features/Features%20Product.dart';
@@ -31,6 +33,8 @@ class _HomePageState extends State<HomePage> {
   FavoriteDataController favoriteDataController =  Get.put(FavoriteDataController());
 
   CartController cartController = Get.put(CartController());
+  DropdownController dropdownController = Get.put(DropdownController());
+  DisplayOrderController displayOrderController = Get.put(DisplayOrderController());
 
   @override
   void initState() {
@@ -45,6 +49,16 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       drawer: const NavDrawer(),
       appBar: AppBar(
+        title: Container(
+          height: 100.0,
+          width: 100.0,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/image/ready_logo.png"),
+              fit: BoxFit.contain
+            )
+          ),
+        ),
         iconTheme: const IconThemeData(color: custom),
         backgroundColor: Colors.white,
         actions: const [
@@ -94,9 +108,9 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                             ),
-                            onTap: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>  const SearchPage()));
-                            },
+                            // onTap: () {
+                            //   Navigator.push(context, MaterialPageRoute(builder: (context)=>  const SearchPage()));
+                            // },
                           ),
                         ),
                       ),
@@ -113,12 +127,12 @@ class _HomePageState extends State<HomePage> {
                       size: 13.0,
                       fontWeight: FontWeight.w500,
                     ),
-                    RobotoText(
-                      text: "View all",
-                      size: 13.0,
-                      fontWeight: FontWeight.w200,
-                      color: custom,
-                    ),
+                    // RobotoText(
+                    //   text: "View all",
+                    //   size: 13.0,
+                    //   fontWeight: FontWeight.w200,
+                    //   color: custom,
+                    // ),
                   ],
                 ),
                 const SizedBox(height: 10.0,),
@@ -145,12 +159,12 @@ class _HomePageState extends State<HomePage> {
                       size: 13.0,
                       fontWeight: FontWeight.w500,
                     ),
-                    RobotoText(
-                      text: "View all",
-                      size: 13.0,
-                      fontWeight: FontWeight.w200,
-                      color: custom,
-                    ),
+                    // RobotoText(
+                    //   text: "View all",
+                    //   size: 13.0,
+                    //   fontWeight: FontWeight.w200,
+                    //   color: custom,
+                    // ),
                   ],
                 ),
                 const SizedBox(height: 10.0),
@@ -197,12 +211,12 @@ class _HomePageState extends State<HomePage> {
                       size: 13.0,
                       fontWeight: FontWeight.w500,
                     ),
-                    RobotoText(
-                      text: "View all",
-                      size: 13.0,
-                      fontWeight: FontWeight.w200,
-                      color: custom,
-                    ),
+                    // RobotoText(
+                    //   text: "View all",
+                    //   size: 13.0,
+                    //   fontWeight: FontWeight.w200,
+                    //   color: custom,
+                    // ),
                   ],
                 ),
 
