@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:testing_riverpod/pages/practice%20details.dart';
 
-import '../components/CartButton.dart';
+import '../cart/screen/CartButton.dart';
 import '../components/colors.dart';
 import '../components/component.dart';
 import '../Model/favorite item model.dart';
@@ -260,7 +260,7 @@ class _PracticeState extends State<Practice> {
                                                 )),
                                             const SizedBox(width: 15.0),
 //add to car
-                                            const AddToCartButton(),
+//                                             const AddToCartButton(),
                                           ],
                                         ),
                                       ],

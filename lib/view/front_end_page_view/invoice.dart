@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:testing_riverpod/components/colors.dart';
 import 'package:testing_riverpod/components/component.dart';
 
-import '../../components/CartButton.dart';
+import '../../cart/screen/CartButton.dart';
 
 class MyInvoice extends StatelessWidget {
   const MyInvoice({Key? key}) : super(key: key);

@@ -1,28 +1,27 @@
+import 'dart:convert';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:simple_fontellico_progress_dialog/simple_fontico_loading.dart';
-import 'package:testing_riverpod/view/home_page_features/Nav_Drawer.dart';
+import 'package:testing_riverpod/cart/controller/cart_controller.dart';
+import 'package:testing_riverpod/cart/model/cart_data_display_model.dart';
 import 'package:testing_riverpod/components/component.dart';
-import 'package:testing_riverpod/components/progress%20bar.dart';
-import 'package:testing_riverpod/view/front_end_page_view/Checkout%20Page.dart';
-import 'package:testing_riverpod/view/front_end_page_view/Detailed%20Page.dart';
-import 'package:testing_riverpod/view/front_end_page_view/EmptyCard.dart';
-
-import '../../components/CartButton.dart';
+import 'package:testing_riverpod/cart/screen/Checkout%20Page.dart';
+import 'package:testing_riverpod/cart/screen/EmptyCard.dart';
+import 'CartButton.dart';
 import '../../components/colors.dart';
 import '../../components/snack_bar.dart';
 import '../../constants/share_preference_name.dart';
 import '../../data/local data/cart_data_controller.dart';
 import '../../preferences.dart';
 import '../../provider class/Data Class.dart';
-import 'log in.dart';
+import '../../view/front_end_page_view/log in.dart';
 
 class CartPage extends StatefulWidget {
+
   const CartPage({Key? key}) : super(key: key);
 
   @override
@@ -30,17 +29,16 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
-  void _show() {
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      content: Text("Snap!!! Your item has been deleted"),
-    ));
-  }
 
-  int count = 1;
-
-  int totalPrice = 0;
 
   CartDataController cartDataController = Get.find();
+  CartController cartController = Get.find();
+
+  @override
+  void initState() {
+   cartDataController.displayCartData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,97 +71,140 @@ class _CartPageState extends State<CartPage> {
               children: [
                 SizedBox(
                   height: 360.0,
-                  child: GetBuilder<CartDataController>(
-                      init: CartDataController(),
+                  child: GetBuilder<CartController>(
+                      init: CartController(),
                       builder: (data) {
-                        int tempPrice = 0;
-                        return ListView.builder(
-                            itemCount: data.cardData.length,
-                            itemBuilder: (context, index) {
-                              var product =
-                                  data.cardData[index].values.toList();
-                              int price = product[0];
-                              tempPrice += price;
 
-                              try {
-                                setState(() => totalPrice = tempPrice);
-                              } catch (e) {
-                                print(e.toString());
-                              }
+
+                        if(data.isError){
+                          return  Center(child: Text(data.errorMessage.toString()),);
+                        }
+                        else if(data.cartDataDisplayModel== null){
+                          return const Center(child: CircularProgressIndicator(),);
+                        }
+                        else if(data.cartDataDisplayModel!.cartData!.isEmpty){
+                          return const Center(child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              RobotoText(text: "Your Cart is Empty", size: 32.0, fontWeight: FontWeight.w200, color: Colors.grey),
+                              SizedBox(height: 30.0,),
+                              Center(child: Icon(Icons.shopping_cart_outlined, color: Colors.grey,size: 100.0,)),
+                            ],
+                          ),);
+                        }
+
+                        return ListView.builder(
+                            itemCount: data.cartDataDisplayModel?.cartData?.length,
+                            itemBuilder: (context, index) {
+
+                              Product? product = data.cartDataDisplayModel?.cartData?[index].product;
+                              
+                              CartData cartData = data.cartDataDisplayModel!.cartData![index];
+
                               return Card(
                                 elevation: 0.5,
                                 child: Padding(
                                   padding: const EdgeInsets.only(
-                                      left: 5.0, right: 5.0),
-                                  child: ListTile(
-                                    contentPadding: EdgeInsets.zero,
-                                    leading: Container(
-                                      decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                          image: NetworkImage(product[3]),
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                      width: 70.0,
-                                    ),
-                                    title: Text(
-                                      product[1].toString(),
-                                      maxLines: 3,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: GoogleFonts.roboto(
-                                        textStyle: const TextStyle(
-                                            fontSize: 15.0,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w400),
-                                      ),
-                                    ),
-                                    subtitle: Row(
-                                      children: [
-                                        Text(
-                                          product[2].toString(),
-                                          style: GoogleFonts.roboto(
-                                            textStyle: const TextStyle(
-                                                decoration:
-                                                    TextDecoration.lineThrough,
-                                                fontSize: 14.0,
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.w200),
+                                      left: 10.0, right: 10.0),
+
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        width: 80.0,
+                                        height: 80.0,
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                            image: NetworkImage("https://readyelectronics.com.bd/${product?.image?.image.toString()}"),
+                                            fit: BoxFit.contain,
                                           ),
                                         ),
-                                        const SizedBox(
-                                          width: 5.0,
-                                        ),
-                                        RobotoText(
-                                          text: product[0].toString(),
-                                          size: 15.0,
-                                          fontWeight: FontWeight.normal,
-                                          color: custom,
-                                        ),
-                                      ],
-                                    ),
-                                    trailing: GestureDetector(
-                                      onTap: () {
-                                        context
-                                            .read<CartProvider>()
-                                            .removeCounter();
-                                        data.removeCardData(index);
-                                        if (cartDataController
-                                            .cardData.isEmpty) {
-                                          Navigator.pop(context);
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const EmptyCard()));
-                                        }
-                                      },
-                                      child: const Icon(
-                                        Icons.delete,
-                                        size: 25.0,
-                                        color: custom,
                                       ),
-                                    ),
+                                      const SizedBox(width: 5.0,),
+                                      Flexible(
+
+                                        child: Column(
+                                          children: [
+                                            Text(
+                                              product!.proName.toString(),
+                                              maxLines: 3,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: GoogleFonts.roboto(
+                                                textStyle: const TextStyle(
+                                                    fontSize: 15.0,
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.w400),
+                                              ),
+                                            ),
+
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  product.proOldprice.toString(),
+                                                  style: GoogleFonts.roboto(
+                                                    textStyle: const TextStyle(
+                                                        decoration:
+                                                        TextDecoration.lineThrough,
+                                                        fontSize: 14.0,
+                                                        color: Colors.black,
+                                                        fontWeight: FontWeight.w200),
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  width: 5.0,
+                                                ),
+                                                RobotoText(
+                                                  text: product.proNewprice.toString(),
+                                                  size: 15.0,
+                                                  fontWeight: FontWeight.normal,
+                                                  color: custom,
+                                                ),
+                                              ],
+                                            ),
+
+                                          ],
+                                        ),
+                                      ),
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          IconButton(onPressed: ()=> data.productDelete(productId: cartData.productId.toString()), icon: Icon(Icons.delete, color: custom, size: 25.0,)),
+
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              IconButton(onPressed: (){
+
+                                                if(int.parse(cartData.quantity.toString()) > 1){
+                                                  data.productQuantityDecrement(productId: cartData.productId.toString());
+                                                }
+
+                                              } , icon: const Icon(Icons.remove, color: Colors.red, size: 16.0,)),
+
+                                              Container(
+                                                width: 30.0,
+                                                height: 20,
+                                                decoration: BoxDecoration(
+                                                    shape: BoxShape.rectangle,
+                                                    border: Border.all(color: Colors.grey),
+                                                ),
+                                                child: Center(child: Text(cartData.quantity.toString())),
+                                              ),
+
+                                              IconButton(onPressed: ()=> data.productQuantityIncrement(productId: cartData.productId.toString()), icon: Icon(Icons.add, color: Colors.green, size: 16.0,)),
+
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+
+
+
+                                    ],
                                   ),
+
                                 ),
                               );
                             });
@@ -253,9 +294,10 @@ class _CartPageState extends State<CartPage> {
                     );
                   },
                 ),
-                GetBuilder<CartDataController>(
-                    init: CartDataController(),
-                    builder: (price) {
+                GetBuilder<CartController>(
+                    init: CartController(),
+                    builder: (priceCalculation) {
+
                       return SizedBox(
                         height: 170.0,
                         width: MediaQuery.of(context).size.width,
@@ -286,7 +328,7 @@ class _CartPageState extends State<CartPage> {
                                         ),
                                         RobotoText(
                                           text:
-                                              "You're saving ${price.totalDiscountPrice} in this order",
+                                              "You're saving ${priceCalculation.totalDiscountPrice.toString()} in this order",
                                           size: 15.0,
                                           fontWeight: FontWeight.w500,
                                           color: Colors.white,
@@ -310,7 +352,7 @@ class _CartPageState extends State<CartPage> {
                                             fontWeight: FontWeight.w300,
                                             color: Colors.black),
                                         RobotoText(
-                                            text: price.totalOldPrice,
+                                            text: priceCalculation.oldPrice.toString(),
                                             size: 15.0,
                                             fontWeight: FontWeight.w600,
                                             color: Colors.black)
@@ -331,8 +373,7 @@ class _CartPageState extends State<CartPage> {
                                             color: Colors.black),
                                         RobotoText(
                                             // text: value.oldPrice - value.totalPrice,
-                                            text: (price.totalDiscountPrice)
-                                                .toString(),
+                                            text: priceCalculation.totalDiscountPrice.toString(),
                                             size: 15.0,
                                             fontWeight: FontWeight.w600,
                                             color: Colors.black),
@@ -359,7 +400,7 @@ class _CartPageState extends State<CartPage> {
                                       color: custom,
                                     ),
                                     RobotoText(
-                                      text: price.totalPrice,
+                                      text: priceCalculation.newPrice.toString(),
                                       size: 16.0,
                                       fontWeight: FontWeight.w600,
                                       color: custom,
@@ -372,6 +413,7 @@ class _CartPageState extends State<CartPage> {
                         ),
                       );
                     }),
+
               ],
             ),
             const SizedBox(
@@ -382,7 +424,7 @@ class _CartPageState extends State<CartPage> {
               child: GestureDetector(
                 onTap: () {
                   userLoggedIn();
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const CheckOutPage()));
+                 // Navigator.push(context, MaterialPageRoute(builder: (context)=>const CheckOutPage()));
                 },
                 child: Container(
                   height: 50.0,
@@ -439,13 +481,45 @@ class _CartPageState extends State<CartPage> {
 
   void userLoggedIn() async{
     var isLogIn =await MySharedPreferences.getBoolData(key: SharedRefName.isLoggedIn);
+    // bool isLogIn = true;
     if (isLogIn == true) {
-      Navigator.push(context, MaterialPageRoute(builder: (context)=> const CheckOutPage()));
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>  CheckOutPage()));
     }
     else {
-      Navigator.push(context, MaterialPageRoute(builder: (context)=> const LogInOTP()));
+      Navigator.push(context, MaterialPageRoute(builder: (context)=> const LogInOTP(previousScreen: "cartScreen",)));
 
       CustomSnackBar(context: context, text: "You need to log in first");
     }
   }
+
+  void removeFromDB(String id) async{
+    try{
+      http.Response response = await http.delete(
+        Uri.parse("https://readyelectronics.com.bd/api/v1/cart/delete/$id"),
+
+        headers: {
+          "customer_id": 315.toString(),
+          "Authorization" : "Bearer ${SharedRefName.token}"
+        },
+      );
+
+      print("id : $id");
+
+      print("Deletion response ${response.body}");
+      if(response.statusCode==200){
+
+        print("Deletion success");
+
+        final data = jsonDecode(response.body);
+
+      }
+      else{
+        print("Deletion Failed");
+      }
+    } catch(e,tr){
+      print("otp verification exceptions ${e.toString()}");
+    }
+  }
+
 }
+

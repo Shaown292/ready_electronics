@@ -13,7 +13,9 @@ import '../../provider class/Data Class.dart';
 
 class LogInOTP extends StatefulWidget {
 
-  const LogInOTP({Key? key}) : super(key: key);
+  const LogInOTP({Key? key, required this.previousScreen}) : super(key: key);
+
+  final String previousScreen;
 
   @override
   State<LogInOTP> createState() => _LogInOTPState();
@@ -122,7 +124,7 @@ class _LogInOTPState extends State<LogInOTP> {
             onTap: () {
               sentOpt(phoneNumberController.text.toString());
               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>  OTPVerification(
-                phoneNumber: phoneNumberController.text.toString(),
+                phoneNumber: phoneNumberController.text.toString(),previousScreen: widget.previousScreen,
               )));
               context.read<AddDetailsProvider>().addMobile(phoneNumberController.text.toString());
 

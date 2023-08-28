@@ -2,22 +2,20 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'package:google_fonts/google_fonts.dart';
-
-import 'package:html/parser.dart';
+import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-import 'package:testing_riverpod/components/CartButton.dart';
+import 'package:testing_riverpod/cart/screen/CartButton.dart';
 import 'package:testing_riverpod/components/snack_bar.dart';
-import 'package:testing_riverpod/view/front_end_page_view/cart_page.dart';
-
+import 'package:testing_riverpod/constants/share_preference_name.dart';
 import 'package:testing_riverpod/view/home_page_features/Features%20Product.dart';
-
+import '../../cart/controller/cart_controller.dart';
 import '../../components/colors.dart';
 import '../../components/component.dart';
 import '../../data/local data/cart_data_controller.dart';
 import '../../data/local data/favorite data.dart';
 import '../../provider class/Data Class.dart';
+
 
 
 
@@ -53,22 +51,8 @@ class _DetailedPageState extends State<DetailedPage> {
   bool isAddedToCart = false;
 
   bool isTempCartData = true;
-  void _show() {
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      content: Text("Your Product has been added to the cart yay!!!"),
-    ));
-  }
-  void _selected() {
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      content: Text("Already in the cart!!!"),
-    ));
-  }
 
-  void _favShow() {
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      content: Text("Your Product has been added to the favorite list!!!"),
-    ));
-  }
+
 
   String removeHtmlTags(String input) {
     final RegExp htmlRegExp =
@@ -81,20 +65,23 @@ class _DetailedPageState extends State<DetailedPage> {
 
   CartDataController cartDataController = Get.find();
   FavoriteDataController favoriteDataController = Get.find();
+  CartController cartController = Get.find();
 
 
   @override
   void initState() {
     super.initState();
   }
+
+
   @override
   Widget build(BuildContext context) {
+
     int price = int.parse(widget.newPrice);
     String name = widget.productName;
     int oldPrice = int.parse(widget.oldPrice);
     String image = "https://readyelectronics.com.bd/${widget.image}";
-    int id = widget.productId;
-
+    String id = widget.productId.toString();
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(color: custom),
@@ -240,9 +227,7 @@ class _DetailedPageState extends State<DetailedPage> {
                                     onTap: () async {
 
                                       if(!isAddedToCart){
-                                        context
-                                            .read<CartProvider>()
-                                            .addCounter();
+
                                         final data = {
                                           "price": price,
                                           "name": name,
@@ -251,16 +236,17 @@ class _DetailedPageState extends State<DetailedPage> {
                                           "id": id,
                                         };
 
-                                        cartDataController.addCardData(data);
+
+                                        cartController.addToCart(productId: id, context: context);
+
+
                                         isAddedToCart = true;
-                                        CustomSnackBar(context: context, text: "Your Product has been added to the cart yay!!!");
                                       }
                                       else{
                                       CustomSnackBar(context: context, text: "Already in the cart!!!");
                                       }
 
-                                      // _hiveCreate(data);
-                                      // print(CardData.instance.tempCardData);
+
                                     },
                                     child: Container(
                                       height: 40.0,
@@ -292,11 +278,9 @@ class _DetailedPageState extends State<DetailedPage> {
                                         "image": image,
                                         "id": id,
                                       };
-
                                       favoriteDataController.addFavData(data);
                                       CustomSnackBar(context: context, text: "Your Product has been added to the cart yay!!!");
-                                      // _hiveCreate(data);
-                                      // print(CardData.instance.tempCardData);
+
                                     },
                                     child: const Icon(
                                       Icons.favorite_outline,
@@ -350,4 +334,6 @@ class _DetailedPageState extends State<DetailedPage> {
       ),
     );
   }
+
+
 }

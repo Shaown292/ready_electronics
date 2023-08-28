@@ -14,7 +14,6 @@ class EmptyCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             Container(
               height: 50.0,
               width: MediaQuery.of(context).size.width,

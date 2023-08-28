@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:testing_riverpod/view/front_end_page_view/Detailed%20Page.dart';
 
 import '../../Model/All Category Model.dart';
-import '../../components/CartButton.dart';
+import '../../cart/screen/CartButton.dart';
 import '../../components/colors.dart';
 import '../../components/component.dart';
 

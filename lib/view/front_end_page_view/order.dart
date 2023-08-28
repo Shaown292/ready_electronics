@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:testing_riverpod/components/component.dart';
 import 'package:testing_riverpod/data/order%20data.dart';
 
-import '../../components/CartButton.dart';
+import '../../cart/screen/CartButton.dart';
 import '../../components/colors.dart';
 
 class OrderPage extends StatefulWidget {

@@ -10,19 +10,19 @@ import 'package:testing_riverpod/view/front_end_page_view/AddShippingAddressPage
 import 'package:testing_riverpod/view/front_end_page_view/HomePage.dart';
 
 
-import '../../components/CartButton.dart';
+import '../../cart/screen/CartButton.dart';
 import '../../components/colors.dart';
 import '../../components/text field.dart';
 import '../../provider class/provider for form validation.dart';
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+class EditProfilePage extends StatefulWidget {
+  const EditProfilePage({Key? key}) : super(key: key);
 
   @override
-  State<ProfilePage> createState() => _ProfilePageState();
+  State<EditProfilePage> createState() => _EditProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _EditProfilePageState extends State<EditProfilePage> {
 
   final nameController = TextEditingController();
   final emailController = TextEditingController();

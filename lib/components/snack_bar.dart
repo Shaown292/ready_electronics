@@ -9,7 +9,8 @@ import 'package:testing_riverpod/components/component.dart';
 class CustomSnackBar {
   final BuildContext context;
   final String text;
-  CustomSnackBar({required this.context, required this.text})
+  final Color color;
+  CustomSnackBar({this.color=Colors.black, required this.context, required this.text})
   {
     ScaffoldMessenger.of(context).showSnackBar( SnackBar(
       content:  Text(text),
@@ -18,7 +19,7 @@ class CustomSnackBar {
       behavior: SnackBarBehavior.floating,
       margin: EdgeInsets.all(5),
       action: SnackBarAction(
-        textColor: Colors.black,
+        textColor: color,
         label: 'dismiss',
         onPressed: () {
         },

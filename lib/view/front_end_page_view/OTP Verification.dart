@@ -1,7 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:testing_riverpod/cart/screen/cart_page.dart';
+import 'package:testing_riverpod/view/front_end_page_view/AddShippingAddressPage.dart';
 import 'package:testing_riverpod/view/front_end_page_view/HomePage.dart';
+import 'package:testing_riverpod/view/front_end_page_view/edit_profile_page.dart';
 import '../../constants/share_preference_name.dart';
 import '../../preferences.dart';
 import '../../components/colors.dart';
@@ -10,9 +13,10 @@ import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 
 class OTPVerification extends StatefulWidget {
 
-  final String phoneNumber;
+  const OTPVerification({Key? key, required this.phoneNumber, required this.previousScreen}) : super(key: key);
 
-  const OTPVerification({Key? key, required this.phoneNumber}) : super(key: key);
+  final String phoneNumber;
+  final String previousScreen;
 
   @override
   State<OTPVerification> createState() => _OTPVerificationState();
@@ -50,8 +54,7 @@ class _OTPVerificationState extends State<OTPVerification> {
 
         MySharedPreferences.setStringData(key: SharedRefName.otp, data: myOtp);
 
-
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const HomePage()));
+        navigateTo();
 
       }
       else{
@@ -61,6 +64,22 @@ class _OTPVerificationState extends State<OTPVerification> {
       print("otp verification exceptions ${e.toString()}");
     }
   }
+
+  void navigateTo(){
+    switch(widget.previousScreen){
+      case "homeScreen" : // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const HomePage()));
+      Navigator.pop(context);
+      break;
+      case "cartScreen" : Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const CartPage()));
+      break;
+      case "addShippingAddressScreen" : Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const AddShippingAddressPage()));
+      break;
+      case "editProfileScreen" : Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const EditProfilePage()));
+      break;
+
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
 

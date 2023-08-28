@@ -8,7 +8,7 @@ import 'package:testing_riverpod/provider%20class/Data%20Class.dart';
 import '../../constants/share_preference_name.dart';
 import '../../preferences.dart';
 import '../home_page_features/Nav_Drawer.dart';
-import '../../components/CartButton.dart';
+import '../../cart/screen/CartButton.dart';
 import '../../components/colors.dart';
 import '../../components/component.dart';
 import 'log in.dart';
@@ -320,10 +320,10 @@ class _ProfilePageViewState extends State<ProfilePageView> {
   void userLoggedIn() async{
     var isLogIn =await MySharedPreferences.getBoolData(key: SharedRefName.isLoggedIn);
     if (isLogIn == true) {
-      Navigator.push(context, MaterialPageRoute(builder: (context)=> const ProfilePage()));
+      Navigator.push(context, MaterialPageRoute(builder: (context)=> const EditProfilePage()));
     }
     else {
-      Navigator.push(context, MaterialPageRoute(builder: (context)=> const LogInOTP()));
+      Navigator.push(context, MaterialPageRoute(builder: (context)=> const LogInOTP(previousScreen: "editProfileScreen",)));
       CustomSnackBar(context: context, text: "You need to log in first");
 
     }

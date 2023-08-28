@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:testing_riverpod/Model/favorite%20item%20model.dart';
 
-import '../components/CartButton.dart';
+import '../cart/screen/CartButton.dart';
 import '../components/colors.dart';
 import '../components/component.dart';
 import '../provider class/Data Class.dart';

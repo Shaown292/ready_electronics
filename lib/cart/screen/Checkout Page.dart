@@ -6,13 +6,16 @@ import 'package:http/http.dart';
 import 'package:testing_riverpod/components/component.dart';
 import 'package:testing_riverpod/constants/share_preference_name.dart';
 import 'package:testing_riverpod/constants/static_variable.dart';
+import 'package:testing_riverpod/dropdown/controller/dropdown_controller.dart';
 import 'package:testing_riverpod/view/front_end_page_view/AddShippingAddressPage.dart';
 
-import '../../components/CartButton.dart';
+import 'CartButton.dart';
 import '../../components/colors.dart';
 import '../../preferences.dart';
 
 class CheckOutPage extends StatefulWidget {
+
+
 
   const CheckOutPage({Key? key}) : super(key: key);
 
@@ -21,17 +24,20 @@ class CheckOutPage extends StatefulWidget {
 }
 
 class _CheckOutPageState extends State<CheckOutPage> {
+
+  DropdownController? dropdownController;
   // final String id;
 
   String name = "";
   String address = "";
   String phoneNumber = "";
+  String token = "";
 
-  // @override
-  // void initState() {
-  //   userInfo();
-  //   super.initState();
-  // }
+  @override
+  void initState() {
+    userInfo();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,7 +105,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
 
                                 const SizedBox(width: 10.0,),
                                 RobotoText(
-                                    text: StaticVariables.name,
+                                    text: name,
                                     size: 14.0,
                                     fontWeight: FontWeight.w500,
                                     color: Colors.black),
@@ -115,7 +121,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
 
                                 const SizedBox(width: 10.0,),
                                 RobotoText(
-                                    text: StaticVariables.mobile,
+                                    text: phoneNumber,
                                     size: 14.0,
                                     fontWeight: FontWeight.w500,
                                     color: Colors.black),
@@ -131,7 +137,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
 
                                 const SizedBox(width: 10.0,),
                                 RobotoText(
-                                    text: StaticVariables.address,
+                                    text: address,
                                     size: 14.0,
                                     fontWeight: FontWeight.w500,
                                     color: Colors.black),
@@ -212,9 +218,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                 ),
                 const SizedBox(height: 40.0),
                 GestureDetector(
-                  onTap: (){
-                    userInfo();
-                  },
+                  onTap: ()=> userInfo(),
                   child: Container(
                     height: 50.0,
                     width: MediaQuery.of(context).size.width,
@@ -240,25 +244,28 @@ class _CheckOutPageState extends State<CheckOutPage> {
     );
   }
   void userInfo() async{
-    var name = await MySharedPreferences.getStringData(key: SharedRefName.name)??"";
-    var address = await MySharedPreferences.getStringData(key: SharedRefName.address)??"";
-    String? phoneNumber = await MySharedPreferences.getStringData(key: SharedRefName.number);
-    String? token = await MySharedPreferences.getStringData(key: SharedRefName.token);
+
+    name = await MySharedPreferences.getStringData(key: SharedRefName.name)??"";
+    address = await MySharedPreferences.getStringData(key: SharedRefName.address)??"";
+    phoneNumber = await MySharedPreferences.getStringData(key: SharedRefName.number)??"";
+    token = await MySharedPreferences.getStringData(key: SharedRefName.token)??"";
+    String areaID =  dropdownController!.areaId.toString();
+    String districtID = dropdownController!.districtId.toString();
     bool hasRequiredData = false;
-
-
-    if(name.isEmpty || address.isEmpty || phoneNumber!.isEmpty){
+    print("Area ID is : ${dropdownController!.areaId.toString()}");
+    print("District ID is : ${dropdownController!.districtId.toString()}");
+    if(name.isEmpty || address.isEmpty || phoneNumber.isEmpty){
       Navigator.push(context, MaterialPageRoute(builder: (context)=>const AddShippingAddressPage()));
-      print("Order Didn't PLaced");
+      print("Order Didn't Placed");
 
     }
     else{
       hasRequiredData = true;
-      placeOrder(name, phoneNumber, "1", address, "32", "", "cash", token!);
+      placeOrder(name, phoneNumber,areaID, address, districtID,"nothing", "cash", token.toString());
     }
   }
 
-  void placeOrder(String name, String number, String area, String address, String district, String note, String paymentTyp, String token) async{
+  void placeOrder(String name, String number, String area, String address, String district, String note, String paymentType, String token) async{
     try{
       Response response = await post(
         Uri.parse("https://readyelectronics.com.bd/api/v1/customer/order/save"),
@@ -269,11 +276,11 @@ class _CheckOutPageState extends State<CheckOutPage> {
           "address": address,
           "district": district,
           "note": note,
-          "paymentType": "payment"
+          "paymentType": paymentType
         },
         headers: {
-          "customer_id" : 123.toString(),
-          "discount" : "123",
+          "customer_id" : 315.toString(),
+          "discount" : "500",
           "Authorization" : "Bearer ${token.toString()}"
         },
       );
@@ -297,12 +304,6 @@ class _CheckOutPageState extends State<CheckOutPage> {
     }
   }
 
-  void getUsersInfo() async {
 
-    name = await MySharedPreferences.getStringData(key: SharedRefName.name)??"";
-    phoneNumber = await MySharedPreferences.getStringData(key: SharedRefName.number)??"";
-    address = await MySharedPreferences.getStringData(key: SharedRefName.address)??"";
-
-  }
 }
 

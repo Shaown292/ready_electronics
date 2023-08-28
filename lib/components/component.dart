@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:testing_riverpod/components/colors.dart';
 import 'package:testing_riverpod/view/front_end_page_view/invoice.dart';
 import '../data/order data.dart';
-import '../view/front_end_page_view/EmptyCard.dart';
+import '../cart/screen/EmptyCard.dart';
 import '../provider class/Data Class.dart';
 
 

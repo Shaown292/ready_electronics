@@ -2,6 +2,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:testing_riverpod/cart/controller/cart_controller.dart';
 import 'package:testing_riverpod/data/local%20data/favorite%20data.dart';
 
 import 'package:testing_riverpod/view/home_page_features/Brand%20View.dart';
@@ -11,7 +12,7 @@ import 'package:testing_riverpod/view/home_page_features/Home%20Product.dart';
 import 'package:testing_riverpod/view/front_end_page_view/Search%20Page.dart';
 import 'package:testing_riverpod/view/home_page_features/SliderView.dart';
 import '../home_page_features/Nav_Drawer.dart';
-import '../../components/CartButton.dart';
+import '../../cart/screen/CartButton.dart';
 import '../../components/colors.dart';
 import '../../components/component.dart';
 import '../../data/local data/cart_data_controller.dart';
@@ -29,8 +30,11 @@ class _HomePageState extends State<HomePage> {
   CartDataController cartDataController = Get.put(CartDataController());
   FavoriteDataController favoriteDataController =  Get.put(FavoriteDataController());
 
+  CartController cartController = Get.put(CartController());
+
   @override
   void initState() {
+    cartController.fetchCartProducts();
    cartDataController.onInit();
     super.initState();
   }
@@ -41,19 +45,8 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       drawer: const NavDrawer(),
       appBar: AppBar(
-        toolbarOpacity: 0.75,
         iconTheme: const IconThemeData(color: custom),
         backgroundColor: Colors.white,
-        title: Container(
-          height: 80.0,
-          width: 80.0,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/image/ready_logo.jpg'),
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
         actions: const [
           Messenger(),
           Padding(

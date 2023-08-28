@@ -410,7 +410,7 @@ class NavDrawerState extends State<NavDrawer> {
     }
 
       else{
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> LogInOTP()));
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> LogInOTP(previousScreen: "homeScreen",)));
       }
 
     }

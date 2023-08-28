@@ -4,11 +4,13 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 
-import 'package:testing_riverpod/components/CartButton.dart';
+import 'package:testing_riverpod/cart/screen/CartButton.dart';
 import 'package:testing_riverpod/components/component.dart';
 import 'package:testing_riverpod/components/snack_bar.dart';
 import 'package:testing_riverpod/constants/static_variable.dart';
-import 'package:testing_riverpod/view/front_end_page_view/Checkout%20Page.dart';
+import 'package:testing_riverpod/cart/screen/Checkout%20Page.dart';
+import 'package:testing_riverpod/dropdown/widget/area_dropdown_widget.dart';
+import 'package:testing_riverpod/dropdown/widget/districts_dropdown_widget.dart';
 
 
 import '../../components/custom_text_field.dart';
@@ -28,33 +30,19 @@ class AddShippingAddressPage extends StatefulWidget {
 }
 
 class _AddShippingAddressPageState extends State<AddShippingAddressPage> {
+
+
   // Initial Selected Value
+   TextEditingController phoneController = TextEditingController();
+   TextEditingController nameController = TextEditingController();
+   TextEditingController addressController = TextEditingController();
 
-
-  final phoneController = TextEditingController();
-  final nameController = TextEditingController();
-  final addressController = TextEditingController();
-
-  String dropDownValue = 'Dhaka';
 
   @override
   void initState() {
     getUsersInfo();
     super.initState();
   }
-  final formKey = GlobalKey<FormState>();
-
-  // List of items in our dropdown menu
-  var City = [
-    'Barisal',
-    'Chattogram',
-    'Dhaka',
-    'Khulna',
-    'Mymensingh',
-    'Rajshahi',
-    'Rangpur',
-    'Sylhet',
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -149,6 +137,8 @@ class _AddShippingAddressPageState extends State<AddShippingAddressPage> {
                   ],
                 ),
                 const SizedBox(height: 20.0),
+
+                //districts
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -178,10 +168,12 @@ class _AddShippingAddressPageState extends State<AddShippingAddressPage> {
                   ],
                 ),
                 const SizedBox(height: 10.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                //areas
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const Column(
+                    Column(
                       children: [
                         Icon(
                           Icons.location_city,
@@ -189,48 +181,45 @@ class _AddShippingAddressPageState extends State<AddShippingAddressPage> {
                           size: 24.0,
                         ),
                         RobotoText(
-                          text: "City",
+                          text: "Districts",
                           size: 18.0,
                           fontWeight: null,
                           color: custom,
                         )
                       ],
                     ),
-                    const SizedBox(width: 45.0,),
+                    SizedBox(width: 12.0,),
+
                     Expanded(
-                      child: DropdownButtonFormField<String>(
-                        // Initial Value
-                        decoration:  InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(color: Colors.white),
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.grey.shade400,
-                            ),
-                          ),
-                          fillColor: Colors.grey.shade200,
-                          filled: true,
+                      // fit: FlexFit.loose,
+                        child: DistrictsDropdownWidget()
+                    )
+
+                  ],
+                ),
+
+                const SizedBox(height: 10.0),
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      children: [
+                        Icon(
+                          Icons.location_city,
+                          color: custom,
+                          size: 24.0,
                         ),
-                        value: dropDownValue,
-                        // Down Arrow Icon
-                        icon: const Icon(Icons.keyboard_arrow_down),
-                        // Array list of items
-                        items: City.map((String items) {
-                          return DropdownMenuItem(
-                            value: items,
-                            child: Text(items),
-                          );
-                        }).toList(),
-                        // After selecting the desired option,it will
-                        // change button value to selected value
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            dropDownValue = newValue!;
-                          });
-                        },
-                      ),
+                        RobotoText(
+                          text: "Areas",
+                          size: 18.0,
+                          fontWeight: null,
+                          color: custom,
+                        )
+                      ],
+                    ),
+                    SizedBox(width: 35.0,),
+                    Expanded(
+                      child: AreaDropdownWidget(),
                     ),
                   ],
                 ),
@@ -247,13 +236,14 @@ class _AddShippingAddressPageState extends State<AddShippingAddressPage> {
 
                     child: GestureDetector(
                       onTap: () {
-                        MySharedPreferences.setStringData(key: SharedRefName.name, data: nameController.text.toString());
-                        MySharedPreferences.setStringData(key: SharedRefName.address, data: addressController.text.toString());
 
-                        StaticVariables.name = nameController.text;
-                        StaticVariables.address = addressController.text;
-
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>CheckOutPage()));
+                        String name = nameController.text;
+                        String address = addressController.text;
+                        MySharedPreferences.setStringData(key: SharedRefName.name, data: name);
+                        MySharedPreferences.setStringData(key:SharedRefName.address, data: address);
+                        print("Name is : $name");
+                        print("Address is : $address");
+                        userLoggedIn();
                       },
                       child: Center(
                         child: Text('Save', style: GoogleFonts.roboto(
@@ -279,15 +269,15 @@ class _AddShippingAddressPageState extends State<AddShippingAddressPage> {
   void userLoggedIn() async{
 
     var isLogIn =await MySharedPreferences.getBoolData(key: SharedRefName.isLoggedIn);
-
+   // bool isLogIn = true;
 
     if (isLogIn == true) {
 
-      Navigator.push(context, MaterialPageRoute(builder: (context)=> const ProfilePage()));
+      Navigator.pop(context);
     }
 
     else {
-      Navigator.push(context, MaterialPageRoute(builder: (context)=> const LogInOTP()));
+      Navigator.push(context, MaterialPageRoute(builder: (context)=> const LogInOTP(previousScreen:  "addShippingAddressScreen",)));
 
       CustomSnackBar(context: context, text: "You need to Log in first");
 
