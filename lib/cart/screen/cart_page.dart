@@ -1,23 +1,18 @@
-import 'dart:convert';
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart' as http;
-import 'package:http/http.dart';
-import 'package:provider/provider.dart';
 import 'package:testing_riverpod/cart/controller/cart_controller.dart';
 import 'package:testing_riverpod/cart/model/cart_data_display_model.dart';
 import 'package:testing_riverpod/components/component.dart';
 import 'package:testing_riverpod/cart/screen/Checkout%20Page.dart';
-import 'package:testing_riverpod/cart/screen/EmptyCard.dart';
 import 'CartButton.dart';
 import '../../components/colors.dart';
 import '../../components/snack_bar.dart';
 import '../../constants/share_preference_name.dart';
 import '../../data/local data/cart_data_controller.dart';
 import '../../preferences.dart';
-import '../../provider class/Data Class.dart';
 import '../../view/front_end_page_view/log in.dart';
 
 class CartPage extends StatefulWidget {
@@ -33,6 +28,7 @@ class _CartPageState extends State<CartPage> {
 
   CartDataController cartDataController = Get.find();
   CartController cartController = Get.find();
+  String totalAmountToPay = "";
 
   @override
   void initState() {
@@ -42,6 +38,7 @@ class _CartPageState extends State<CartPage> {
 
   @override
   Widget build(BuildContext context) {
+    String total = totalAmountToPay;
     return Scaffold(
       appBar: AppBar(
         title: const RobotoText(
@@ -100,6 +97,8 @@ class _CartPageState extends State<CartPage> {
                               Product? product = data.cartDataDisplayModel?.cartData?[index].product;
                               
                               CartData cartData = data.cartDataDisplayModel!.cartData![index];
+                             String total = product!.proNewprice.toString();
+                             totalAmountToPay = total;
 
                               return Card(
                                 elevation: 0.5,
@@ -126,7 +125,7 @@ class _CartPageState extends State<CartPage> {
                                         child: Column(
                                           children: [
                                             Text(
-                                              product!.proName.toString(),
+                                              product.proName.toString(),
                                               maxLines: 3,
                                               overflow: TextOverflow.ellipsis,
                                               style: GoogleFonts.roboto(
@@ -423,7 +422,7 @@ class _CartPageState extends State<CartPage> {
               child: GestureDetector(
                 onTap: () {
                   userLoggedIn();
-                 // Navigator.push(context, MaterialPageRoute(builder: (context)=>const CheckOutPage()));
+
                 },
                 child: Container(
                   height: 50.0,
@@ -480,9 +479,8 @@ class _CartPageState extends State<CartPage> {
 
   void userLoggedIn() async{
     var isLogIn =await MySharedPreferences.getBoolData(key: SharedRefName.isLoggedIn);
-    // bool isLogIn = true;
     if (isLogIn == true) {
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>  CheckOutPage()));
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>  CheckOutPage(total: totalAmountToPay,)));
     }
     else {
       Navigator.push(context, MaterialPageRoute(builder: (context)=> const LogInOTP(previousScreen: "cartScreen",)));

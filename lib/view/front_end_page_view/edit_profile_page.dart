@@ -1,19 +1,15 @@
+
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:simple_fontellico_progress_dialog/simple_fontico_loading.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:testing_riverpod/components/component.dart';
-import 'package:testing_riverpod/components/progress%20bar.dart';
 import 'package:testing_riverpod/constants/share_preference_name.dart';
 import 'package:testing_riverpod/preferences.dart';
-import 'package:testing_riverpod/provider%20class/Data%20Class.dart';
-import 'package:testing_riverpod/view/front_end_page_view/AddShippingAddressPage.dart';
-import 'package:testing_riverpod/view/front_end_page_view/HomePage.dart';
-
-
 import '../../cart/screen/CartButton.dart';
 import '../../components/colors.dart';
-import '../../components/text field.dart';
-import '../../provider class/provider for form validation.dart';
+import 'my account.dart';
+
 
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({Key? key}) : super(key: key);
@@ -29,12 +25,18 @@ class _EditProfilePageState extends State<EditProfilePage> {
   final phoneNumberController = TextEditingController();
   final addressController= TextEditingController();
 
+  final ImagePicker picker = ImagePicker();
+  String? path;
+
   _alertBox(){
     const snackBar = SnackBar(content: RobotoText(text: "Save Changed", size: 16.0, fontWeight: FontWeight.w500, color: Colors.black,),
     backgroundColor: custom,
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
+
+
+  File? primaryImage;
 
 
   @override
@@ -75,21 +77,42 @@ class _EditProfilePageState extends State<EditProfilePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Stack(children: [
-                  CircleAvatar(
-                    radius: 48.0,
-                    backgroundColor: Colors.white,
-                    backgroundImage: AssetImage('assets/image/profile.png'),
-                  ),
-                  Positioned(
-                    bottom: 0.0,
-                    right: 0.0,
-                    child: Icon(
-                      Icons.cloud_upload,
-                      color: custom,
+                 GestureDetector(
+                   onTap: ()=> pickImage(),
+                   child: Stack(
+                       children: [
+                         primaryImage != null? Container(
+                           height: 100,
+                           width: 100,
+                           decoration: BoxDecoration(
+                               shape: BoxShape.circle,
+                               border: Border.all(color: custom,width: 3),
+                               image: DecorationImage(
+                                   image: FileImage(primaryImage!)
+                               )
+                           ),
+                         ):
+                         Container(
+                           height: 100,
+                           width: 100,
+                           decoration: BoxDecoration(
+                               shape: BoxShape.circle,
+                               border: Border.all(color: custom,width: 3),
+                               image: const DecorationImage(
+                                   image: AssetImage("assets/image/profile.png")
+                               )
+                           ),
+                         ),
+                    const Positioned(
+                      bottom: 0.0,
+                      right: 0.0,
+                      child: Icon(
+                        Icons.cloud_upload,
+                        color: custom,
+                      ),
                     ),
-                  ),
                 ]),
+                 ),
                 const SizedBox(
                   height: 20.0,
                 ),
@@ -231,13 +254,32 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   void saveData(){
 
-
     MySharedPreferences.setStringData(key: SharedRefName.name, data: nameController.text.toString());
     MySharedPreferences.setStringData(key: SharedRefName.address, data: addressController.text.toString());
     MySharedPreferences.setStringData(key: SharedRefName.email, data: emailController.text.toString());
+    MySharedPreferences.setStringData(key: SharedRefName.imagePath, data: path.toString());
+    print("Image Path is : $path");
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const ProfilePageView()));
 
-    Navigator.pop(context);
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const HomePage()));
+  }
+  /// Get from gallery
 
+
+  Future pickImage() async {
+    try {
+
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if(image == null){
+        return;
+      }
+      final imageTempFilePath = File(image.path);
+      path = image.path.toString();
+      setState(() {
+        primaryImage = imageTempFilePath;
+      });
+
+    } on PlatformException catch(e) {
+      print('Failed to pick image: $e');
+    }
   }
 }

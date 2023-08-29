@@ -1,3 +1,6 @@
+
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -26,6 +29,8 @@ class _ProfilePageViewState extends State<ProfilePageView> {
   final addressController = TextEditingController();
   final emailController = TextEditingController();
   final phoneController = TextEditingController();
+
+  String? imagePath;
 
 
   @override
@@ -65,13 +70,30 @@ class _ProfilePageViewState extends State<ProfilePageView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Stack(children: [
-                  CircleAvatar(
-                    radius: 48.0,
-                    backgroundColor: Colors.white,
-                    backgroundImage: AssetImage('assets/image/profile.png'),
+                 Stack(children: [
+                  imagePath != null? Container(
+                    height: 100,
+                    width: 100,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(color: custom,width: 3),
+                        image: DecorationImage(
+                            image: FileImage(File(imagePath.toString()))
+                        )
+                    ),
+                  ):
+                  Container(
+                    height: 100,
+                    width: 100,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(color: custom,width: 3),
+                        image: const DecorationImage(
+                            image: AssetImage("assets/image/profile.png")
+                        )
+                    ),
                   ),
-                  Positioned(
+                  const Positioned(
                     bottom: 0.0,
                     right: 0.0,
                     child: Icon(
@@ -336,5 +358,10 @@ class _ProfilePageViewState extends State<ProfilePageView> {
     addressController.text = await MySharedPreferences.getStringData(key: SharedRefName.address)??"";
     emailController.text = await MySharedPreferences.getStringData(key: SharedRefName.email)??"";
 
+    String image = await MySharedPreferences.getStringData(key: SharedRefName.imagePath)??"";
+
+    setState(() {
+      imagePath = image;
+    });
   }
 }

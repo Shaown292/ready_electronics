@@ -272,7 +272,7 @@ class _AddShippingAddressPageState extends State<AddShippingAddressPage> {
 
     if (isLogIn == true) {
 
-      Navigator.pop(context);
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> CheckOutPage()));
     }
 
     else {

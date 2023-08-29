@@ -7,4 +7,5 @@ class SharedRefName {
   static String name = "name";
   static String address = "address";
   static String email = "email";
+  static String imagePath = "imagePath" ;
 }

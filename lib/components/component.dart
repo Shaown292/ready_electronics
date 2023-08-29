@@ -5,8 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:testing_riverpod/components/colors.dart';
-import 'package:testing_riverpod/view/front_end_page_view/invoice.dart';
-import '../data/order data.dart';
+
 import '../cart/screen/EmptyCard.dart';
 import '../provider class/Data Class.dart';
 
@@ -459,75 +458,6 @@ class _ProfilePickerState extends State<ProfilePicker> {
   }
 }
 
-class MyOrder extends StatelessWidget {
-  final OrderList orderList;
-  const MyOrder({Key? key, required this.orderList}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-      child: Container(
-        color: Colors.white,
-        height: 120.0,
-        width: MediaQuery.of(context).size.width - 140,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  RobotoText(
-                    text: "Order Id: ${orderList.id}",
-                    size: 14.0,
-                    fontWeight: FontWeight.w200,
-                    color: Colors.black,
-                  ),
-                  RobotoText(
-                    text: "Date : ${orderList.date}",
-                    size: 13.0,
-                    fontWeight: FontWeight.w200,
-                    color: Colors.black,
-                  ),
-                  RobotoText(
-                      text: "Total Price ${orderList.totalPrice}",
-                      size: 16.0,
-                      fontWeight: FontWeight.w500,
-                      color: custom),
-                  RobotoText(
-                    text: orderList.status,
-                    size: 14.0,
-                    fontWeight: FontWeight.w200,
-                    color: Colors.black,
-                  ),
-                ],
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const MyInvoice()));
-                      },
-                      child: const Icon(
-                        Icons.remove_red_eye_rounded,
-                        color: custom,
-                      )),
-                ],
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
 
 class Messenger extends StatelessWidget {
   const Messenger({Key? key}) : super(key: key);

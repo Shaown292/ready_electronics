@@ -9,7 +9,6 @@ import 'package:testing_riverpod/view/front_end_page_view/AddShippingAddressPage
 import 'package:testing_riverpod/view/front_end_page_view/HomePage.dart';
 import 'package:testing_riverpod/view/front_end_page_view/OTP%20Verification.dart';
 import 'package:testing_riverpod/view/front_end_page_view/favorite%20page.dart';
-import 'package:testing_riverpod/view/front_end_page_view/order.dart';
 import 'package:testing_riverpod/view/practice.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 import 'package:url_launcher/url_launcher.dart';
@@ -366,7 +365,12 @@ class NavDrawerState extends State<NavDrawer> {
             ),
             const SizedBox(height: 15.0),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) => _buildPopupDialog(context),
+                );
+              },
               child: const Row(
                 children: [
                   Icon(
@@ -460,6 +464,28 @@ class NavDrawerState extends State<NavDrawer> {
       print("Log Out exceptions ${e.toString()}");
     }
      print("Token After remove: $token");
+  }
+
+  Widget _buildPopupDialog(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Welcome'),
+      content: const Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Center(child: Text("Copyright © Ready Electronics All rights reserved.")),
+        ],
+      ),
+      actions: <Widget>[
+        MaterialButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          textColor: Theme.of(context).primaryColor,
+          child: const Text('Close'),
+        ),
+      ],
+    );
   }
 
 

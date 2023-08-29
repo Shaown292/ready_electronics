@@ -8,10 +8,11 @@ import 'package:get/get.dart';
 import 'package:testing_riverpod/display%20order/display_order_controller.dart';
 import 'package:testing_riverpod/display%20order/display_order_model.dart';
 
+import '../Invoice/invoice screen/invoice_screen.dart';
 import '../cart/screen/CartButton.dart';
 import '../components/colors.dart';
 import '../components/component.dart';
-import '../data/order data.dart';
+
 
 class DisplayOrderScreen extends StatefulWidget {
   const DisplayOrderScreen({Key? key}) : super(key: key);
@@ -54,9 +55,7 @@ class _DisplayOrderScreenState extends State<DisplayOrderScreen> {
 
           DisplayOrderModel displayOrderModel = DisplayOrderModel.fromJson(jsonDecode(snapshot.data.toString()));
 
-
             return ListView.builder(
-              reverse: true,
                 itemCount: displayOrderModel.orders?.length,
                 itemBuilder: (context, index){
 
@@ -106,10 +105,10 @@ class _DisplayOrderScreenState extends State<DisplayOrderScreen> {
                           children: [
                             GestureDetector(
                                 onTap: () {
-                                  // Navigator.push(
-                                  //     context,
-                                  //     MaterialPageRoute(
-                                  //         builder: (context) => const MyInvoice()));
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => MyInvoice(orderId: data.orderIdPrimary.toString(),)));
                                 },
                                 child: Container(
                                   height: 30.0,
