@@ -48,6 +48,7 @@ class InvoiceController extends GetxController {
 
       isError = true;
       errorMessage = e.toString();
+      update();
 
     }
   }

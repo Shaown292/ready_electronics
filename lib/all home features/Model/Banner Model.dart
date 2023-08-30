@@ -4,18 +4,18 @@
 
 import 'dart:convert';
 
-SpecialBannerModel specialBannerModelFromJson(String str) => SpecialBannerModel.fromJson(json.decode(str));
+BannerModel specialBannerModelFromJson(String str) => BannerModel.fromJson(json.decode(str));
 
-String specialBannerModelToJson(SpecialBannerModel data) => json.encode(data.toJson());
+String specialBannerModelToJson(BannerModel data) => json.encode(data.toJson());
 
-class SpecialBannerModel {
+class BannerModel {
   List<Bannerbottom> bannerbottom;
 
-  SpecialBannerModel({
+  BannerModel({
     required this.bannerbottom,
   });
 
-  factory SpecialBannerModel.fromJson(Map<String, dynamic> json) => SpecialBannerModel(
+  factory BannerModel.fromJson(Map<String, dynamic> json) => BannerModel(
     bannerbottom: List<Bannerbottom>.from(json["bannerbottom"].map((x) => Bannerbottom.fromJson(x))),
   );
 

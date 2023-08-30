@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
-import '../../Model/product_get_model.dart';
+import '../../all home features/Model/product_get_model.dart';
 
 class CartDataController extends GetxController{
 

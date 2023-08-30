@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'package:testing_riverpod/cart/screen/CartButton.dart';
 import 'package:testing_riverpod/components/component.dart';
-import 'package:testing_riverpod/view/practice.dart';
-
 import '../../components/colors.dart';
-import '../../Model/favorite item model.dart';
 import '../../data/local data/favorite data.dart';
-import '../../provider class/Data Class.dart';
 
 class MyFavoritePage extends StatefulWidget {
   const MyFavoritePage({Key? key}) : super(key: key);

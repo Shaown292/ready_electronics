@@ -9,6 +9,7 @@ import 'package:testing_riverpod/Invoice/invoice%20model/invoice_model.dart';
 import '../../cart/screen/CartButton.dart';
 import '../../components/colors.dart';
 import '../../components/component.dart';
+import '../../track order/track order screen/track_order_screen.dart';
 
 class MyInvoice extends StatefulWidget {
   MyInvoice({Key? key, required this.orderId}) : super(key: key);
@@ -62,20 +63,31 @@ class _MyInvoiceState extends State<MyInvoice> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding:  const EdgeInsets.symmetric(horizontal: 15.0),
-                  child: GestureDetector(
-                    onTap: (){},
-                    child: Container(
-                      height: 45.0,
-                      width: 120.0,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20.0),
-                        color: customAccent
-                      ),
-                      child: const Center(child: RobotoText(text: "Track order", size: 18.0, fontWeight: FontWeight.w300, color: Colors.black,)),
-                    ),
-                  ),
+                GetBuilder<InvoiceController>(
+                    builder: (track){
+                      if (track.isError) {
+                        return const Text("");
+                      }
+                      if(track.invoiceDataModel == null){
+                        return const Center(child: CircularProgressIndicator(),);
+                      }
+                      return Padding(
+                        padding:  const EdgeInsets.symmetric(horizontal: 15.0),
+                        child: GestureDetector(
+                          onTap: ()=> Navigator.push(context, MaterialPageRoute(builder: (context)=>  TrackOrderScreen(trackId: track.invoiceDataModel!.orderInfo!.trackingId.toString(),))),
+                          child: Container(
+                            height: 45.0,
+                            width: 120.0,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20.0),
+                                color: customAccent
+                            ),
+                            child: const Center(child: RobotoText(text: "Track order", size: 18.0, fontWeight: FontWeight.w300, color: Colors.black,)),
+                          ),
+                        ),
+                      );
+                    },
+
                 ),
               ],
             ),
@@ -88,8 +100,13 @@ class _MyInvoiceState extends State<MyInvoice> {
               ),
             ),
             GetBuilder<InvoiceController>(builder: (invoiceInfo) {
+
               if (invoiceInfo.isError) {
-                return const Text("");
+
+                return Text(invoiceInfo.errorMessage);
+              }
+              if(invoiceInfo.invoiceDataModel== null){
+                return const Center(child: CircularProgressIndicator(),);
               }
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -485,45 +502,3 @@ class _MyInvoiceState extends State<MyInvoice> {
     );
   }
 }
-/*//total amount payable
-
-
-                      Divider(
-                        thickness: 5.0,
-                        color: Colors.blueGrey.shade400,
-                      ),
-
-                      //total amount payable
-                      Divider(
-                        thickness: 5.0,
-                        color: Colors.blueGrey.shade400,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const RobotoText(
-                              text: "Total",
-                              size: 16.0,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black,
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 50.0),
-                              child: RobotoText(
-                                text: invoiceDataModel.orderInfo?.orderTotal,
-                                size: 16.0,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Divider(
-                        thickness: 5.0,
-                        color: Colors.blueGrey.shade400,
-                      ),
-*/

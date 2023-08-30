@@ -1,16 +1,10 @@
 
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:provider/provider.dart';
 import 'package:testing_riverpod/components/snack_bar.dart';
 import 'package:testing_riverpod/view/front_end_page_view/edit_profile_page.dart';
-import 'package:testing_riverpod/provider%20class/Data%20Class.dart';
-
 import '../../constants/share_preference_name.dart';
 import '../../preferences.dart';
-import '../home_page_features/Nav_Drawer.dart';
 import '../../cart/screen/CartButton.dart';
 import '../../components/colors.dart';
 import '../../components/component.dart';

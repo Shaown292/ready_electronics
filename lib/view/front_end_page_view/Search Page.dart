@@ -1,10 +1,8 @@
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:testing_riverpod/Model/Search%20Model.dart';
 import 'package:http/http.dart' as http;
+import '../../all home features/Model/Search Model.dart';
 import '../../components/colors.dart';
 
 class SearchPage extends StatefulWidget {

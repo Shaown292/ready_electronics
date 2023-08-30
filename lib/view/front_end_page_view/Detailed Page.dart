@@ -1,21 +1,15 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
 import 'package:testing_riverpod/cart/screen/CartButton.dart';
 import 'package:testing_riverpod/components/snack_bar.dart';
-import 'package:testing_riverpod/constants/share_preference_name.dart';
-import 'package:testing_riverpod/view/home_page_features/Features%20Product.dart';
+import '../../all home features/screens/Features Product.dart';
 import '../../cart/controller/cart_controller.dart';
 import '../../components/colors.dart';
 import '../../components/component.dart';
 import '../../data/local data/cart_data_controller.dart';
 import '../../data/local data/favorite data.dart';
-import '../../provider class/Data Class.dart';
-
 
 
 

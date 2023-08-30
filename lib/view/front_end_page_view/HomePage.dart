@@ -1,24 +1,28 @@
 
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:testing_riverpod/cart/controller/cart_controller.dart';
 import 'package:testing_riverpod/data/local%20data/favorite%20data.dart';
 import 'package:testing_riverpod/display%20order/display_order_controller.dart';
 import 'package:testing_riverpod/dropdown/controller/dropdown_controller.dart';
-
-import 'package:testing_riverpod/view/home_page_features/Brand%20View.dart';
-import 'package:testing_riverpod/view/home_page_features/Features%20Product.dart';
-import 'package:testing_riverpod/view/home_page_features/Front%20Category%20View.dart';
-import 'package:testing_riverpod/view/home_page_features/Home%20Product.dart';
-import 'package:testing_riverpod/view/front_end_page_view/Search%20Page.dart';
-import 'package:testing_riverpod/view/home_page_features/SliderView.dart';
-import '../home_page_features/Nav_Drawer.dart';
+import '../../all home features/controller/brand controller/brand controller.dart';
+import '../../all home features/controller/features product controller/features_product_controller.dart';
+import '../../all home features/controller/flash sell controller/flash_sell_controller.dart';
+import '../../all home features/controller/front category controller/front_category_controller.dart';
+import '../../all home features/controller/home_product_controller/all_product_controller.dart';
+import '../../all home features/controller/slider_controller/slider_controller.dart';
+import '../../all home features/screens/Brand View.dart';
+import '../../all home features/screens/Features Product.dart';
+import '../../all home features/screens/Flash Sell View.dart';
+import '../../all home features/screens/front category view/Front Category View.dart';
+import '../../all home features/screens/Nav_Drawer.dart';
+import '../../all home features/screens/SliderView.dart';
+import '../../all home features/screens/home_product.dart';
 import '../../cart/screen/CartButton.dart';
 import '../../components/colors.dart';
 import '../../components/component.dart';
 import '../../data/local data/cart_data_controller.dart';
-import '../home_page_features/Flash Sell View.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -31,10 +35,15 @@ class _HomePageState extends State<HomePage> {
 
   CartDataController cartDataController = Get.put(CartDataController());
   FavoriteDataController favoriteDataController =  Get.put(FavoriteDataController());
-
+  FlashSellController flashSellController = Get.put(FlashSellController());
   CartController cartController = Get.put(CartController());
   DropdownController dropdownController = Get.put(DropdownController());
   DisplayOrderController displayOrderController = Get.put(DisplayOrderController());
+  SliderController sliderController = Get.put(SliderController());
+  HomeProductController homeProductController = Get.put(HomeProductController());
+  FeaturesProductController featuresProductController = Get.put(FeaturesProductController());
+  FrontCategoryController frontCategoryController = Get.put(FrontCategoryController());
+  BrandController brandController = Get.put(BrandController());
 
   @override
   void initState() {
@@ -159,12 +168,6 @@ class _HomePageState extends State<HomePage> {
                       size: 13.0,
                       fontWeight: FontWeight.w500,
                     ),
-                    // RobotoText(
-                    //   text: "View all",
-                    //   size: 13.0,
-                    //   fontWeight: FontWeight.w200,
-                    //   color: custom,
-                    // ),
                   ],
                 ),
                 const SizedBox(height: 10.0),
@@ -211,22 +214,13 @@ class _HomePageState extends State<HomePage> {
                       size: 13.0,
                       fontWeight: FontWeight.w500,
                     ),
-                    // RobotoText(
-                    //   text: "View all",
-                    //   size: 13.0,
-                    //   fontWeight: FontWeight.w200,
-                    //   color: custom,
-                    // ),
+
                   ],
                 ),
 
                 const SizedBox(
                   height: 10,
                 ),
-
-
-
-                //Listed item of the regular card
 
                 const FeaturesProductView(),
                 const SizedBox(

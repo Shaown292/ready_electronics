@@ -1,26 +1,22 @@
 
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_fontellico_progress_dialog/simple_fontico_loading.dart';
 import 'package:testing_riverpod/components/component.dart';
 import 'package:testing_riverpod/view/front_end_page_view/AddShippingAddressPage.dart';
-import 'package:testing_riverpod/view/front_end_page_view/HomePage.dart';
-import 'package:testing_riverpod/view/front_end_page_view/OTP%20Verification.dart';
 import 'package:testing_riverpod/view/front_end_page_view/favorite%20page.dart';
-import 'package:testing_riverpod/view/practice.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 import 'package:url_launcher/url_launcher.dart';
+import '../../components/AlertBox.dart';
 import '../../components/colors.dart';
 import '../../components/progress bar.dart';
 import '../../components/snack_bar.dart';
 import '../../constants/share_preference_name.dart';
 import '../../display order/display_order_screen.dart';
 import '../../preferences.dart';
-import '../front_end_page_view/edit_profile_page.dart';
-import '../front_end_page_view/log in.dart';
-import '../front_end_page_view/my account.dart';
+import '../../view/front_end_page_view/log in.dart';
+import '../../view/front_end_page_view/my account.dart';
+import 'about us/about_us.dart';
 
 class NavDrawer extends StatefulWidget {
 
@@ -72,7 +68,7 @@ class NavDrawerState extends State<NavDrawer> {
               onTap: () {
                 whereToGO();
               },
-              child: isUserLoggedIn ?  Row(
+              child: isUserLoggedIn ?  const Row(
                 // mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
@@ -96,7 +92,7 @@ class NavDrawerState extends State<NavDrawer> {
                     ],
                   ),
                 ],
-              ) :  Row(
+              ) :  const Row(
                 // mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
@@ -368,7 +364,7 @@ class NavDrawerState extends State<NavDrawer> {
               onTap: () {
                 showDialog(
                   context: context,
-                  builder: (BuildContext context) => _buildPopupDialog(context),
+                  builder: (BuildContext context) => const AboutUs(),
                 );
               },
               child: const Row(
@@ -466,14 +462,15 @@ class NavDrawerState extends State<NavDrawer> {
      print("Token After remove: $token");
   }
 
-  Widget _buildPopupDialog(BuildContext context) {
+
+  Widget _buildPopupDialog() {
     return AlertDialog(
-      title: const Text('Welcome'),
-      content: const Column(
+      title: const RobotoText(text: "Welcome", size: 24.0, fontWeight: FontWeight.w300, color: custom),
+      content:  const Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Center(child: Text("Copyright © Ready Electronics All rights reserved.")),
+          Center(child: RobotoText(text: "Ready Electronics", size: 18.0, fontWeight: FontWeight.w300, color: Colors.black)),
         ],
       ),
       actions: <Widget>[
@@ -482,12 +479,11 @@ class NavDrawerState extends State<NavDrawer> {
             Navigator.of(context).pop();
           },
           textColor: Theme.of(context).primaryColor,
-          child: const Text('Close'),
+          child:  const RobotoText(text: "Close", size: 16.0, fontWeight: FontWeight.w300, color: custom),
         ),
       ],
     );
   }
-
 
 }
 

@@ -1,13 +1,10 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_fontellico_progress_dialog/simple_fontico_loading.dart';
 import 'package:testing_riverpod/components/progress%20bar.dart';
-import 'package:testing_riverpod/view/home_page_features/Nav_Drawer.dart';
 import 'package:testing_riverpod/components/component.dart';
 import 'package:testing_riverpod/view/front_end_page_view/OTP%20Verification.dart';
 import '../../components/colors.dart';
