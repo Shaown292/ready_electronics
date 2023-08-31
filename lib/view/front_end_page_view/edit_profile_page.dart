@@ -8,6 +8,8 @@ import 'package:testing_riverpod/constants/share_preference_name.dart';
 import 'package:testing_riverpod/preferences.dart';
 import '../../cart/screen/CartButton.dart';
 import '../../components/colors.dart';
+import '../../components/snack_bar.dart';
+import 'log in.dart';
 import 'my account.dart';
 
 
@@ -26,7 +28,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
   final addressController= TextEditingController();
 
   final ImagePicker picker = ImagePicker();
-  String? path;
+  String? imagePath;
+
+  bool isImageEdited  = false;
 
   _alertBox(){
     const snackBar = SnackBar(content: RobotoText(text: "Save Changed", size: 16.0, fontWeight: FontWeight.w500, color: Colors.black,),
@@ -35,8 +39,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-
-  File? primaryImage;
 
 
   @override
@@ -81,14 +83,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
                    onTap: ()=> pickImage(),
                    child: Stack(
                        children: [
-                         primaryImage != null? Container(
+                        isImageEdited? Container(
                            height: 100,
                            width: 100,
                            decoration: BoxDecoration(
                                shape: BoxShape.circle,
                                border: Border.all(color: custom,width: 3),
                                image: DecorationImage(
-                                   image: FileImage(primaryImage!)
+                                   image: FileImage(File(imagePath!))
                                )
                            ),
                          ):
@@ -249,21 +251,45 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 
   void getUsersPhoneNumber() async {
+
+    emailController.text = await MySharedPreferences.getStringData(key: SharedRefName.email)??"";
     phoneNumberController.text = await MySharedPreferences.getStringData(key: SharedRefName.number)??"";
+    addressController.text = await MySharedPreferences.getStringData(key: SharedRefName.address)??"";
+    nameController.text = await MySharedPreferences.getStringData(key: SharedRefName.name)??"";
+    String image = await MySharedPreferences.getStringData(key: SharedRefName.imagePath)??"";
+    setState(() {
+      isImageEdited = true;
+      imagePath = image;
+    });
   }
 
   void saveData(){
 
+    userLoggedIn();
     MySharedPreferences.setStringData(key: SharedRefName.name, data: nameController.text.toString());
     MySharedPreferences.setStringData(key: SharedRefName.address, data: addressController.text.toString());
     MySharedPreferences.setStringData(key: SharedRefName.email, data: emailController.text.toString());
-    MySharedPreferences.setStringData(key: SharedRefName.imagePath, data: path.toString());
-    print("Image Path is : $path");
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const ProfilePageView()));
+    MySharedPreferences.setStringData(key: SharedRefName.imagePath, data: imagePath.toString());
+    print("Image Path is : $imagePath");
+
 
   }
-  /// Get from gallery
 
+
+  void userLoggedIn() async{
+    var isLogIn =await MySharedPreferences.getBoolData(key: SharedRefName.isLoggedIn);
+    if (isLogIn == true) {
+      Navigator.pop(context);
+    }
+    else {
+      Navigator.push(context, MaterialPageRoute(builder: (context)=> const LogInOTP(previousScreen: "editProfileScreen",)));
+      CustomSnackBar(context: context, text: "You need to log in first");
+
+    }
+  }
+
+
+  /// Get from gallery
 
   Future pickImage() async {
     try {
@@ -273,9 +299,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
         return;
       }
       final imageTempFilePath = File(image.path);
-      path = image.path.toString();
+      String path = image.path.toString();
       setState(() {
-        primaryImage = imageTempFilePath;
+        imagePath = path;
+        isImageEdited = true;
+        print("ImagePath : $imagePath");
+
       });
 
     } on PlatformException catch(e) {

@@ -65,82 +65,94 @@ class _DisplayOrderScreenState extends State<DisplayOrderScreen> {
                   return Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 10.0, vertical: 10.0),
-                    child: Container(
-                      color: Colors.white,
-                      height: 120.0,
-                      width: MediaQuery.of(context).size.width - 140,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                RobotoText(
-                                  text: "Order Id: ${data.orderIdPrimary}",
-                                  size: 14.0,
-                                  fontWeight: FontWeight.w200,
-                                  color: Colors.black,
-                                ),
-                                RobotoText(
-                                  text: "Date : ${data.createdAt}",
-                                  size: 13.0,
-                                  fontWeight: FontWeight.w200,
-                                  color: Colors.black,
-                                ),
-                                RobotoText(
-                                    text: "Total Price ${data.orderTotal}",
-                                    size: 16.0,
-                                    fontWeight: FontWeight.w500,
-                                    color: custom),
-                                RobotoText(
-                                  text: data.ordertype!.name.toString(),
-                                  size: 14.0,
-                                  fontWeight: FontWeight.w200,
-                                  color: Colors.black,
-                                ),
-                              ],
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                GestureDetector(
-                                    onTap: () async{
-
-                                        Navigator.push(context,
-                                            MaterialPageRoute(
-                                                builder: (context) {
-                                          return MyInvoice(
-                                              orderId: data.orderIdPrimary
-                                                  .toString());
-                                        }));
-
-                                    },
-                                    child: Container(
-                                      height: 30.0,
-                                      width: 120.0,
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(30.0),
-                                        color: custom,
+                    child: Card(
+                      elevation: 1,
+                      child: SizedBox(
+                        height: 140.0,
+                        width: MediaQuery.of(context).size.width - 140,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  RobotoText(
+                                    text: "Order Id: ${data.orderIdPrimary}",
+                                    size: 14.0,
+                                    fontWeight: FontWeight.w200,
+                                    color: Colors.black,
+                                  ),
+                                  RobotoText(
+                                    text: "Date : ${data.createdAt}",
+                                    size: 13.0,
+                                    fontWeight: FontWeight.w200,
+                                    color: Colors.black,
+                                  ),
+                                  RobotoText(
+                                      text: "Total Price ${data.orderTotal}",
+                                      size: 16.0,
+                                      fontWeight: FontWeight.w500,
+                                      color: custom),
+                                  Container(
+                                    height: 30.0,
+                                    width: 70.0,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                      color: Colors.greenAccent,
+                                    ),
+                                    child: Center(
+                                      child: RobotoText(
+                                        text: data.ordertype!.name.toString(),
+                                        size: 14.0,
+                                        fontWeight: FontWeight.w200,
+                                        color: Colors.black,
                                       ),
-                                      child: const Center(
-                                        child: RobotoText(
-                                          text: "Show Invoice",
-                                          size: 16.0,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  GestureDetector(
+                                      onTap: () async{
+
+                                          Navigator.push(context,
+                                              MaterialPageRoute(
+                                                  builder: (context) {
+                                            return MyInvoice(
+                                                orderId: data.orderIdPrimary
+                                                    .toString());
+                                          }));
+
+                                      },
+                                      child: Container(
+                                        height: 30.0,
+                                        width: 120.0,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(30.0),
+                                          color: custom,
                                         ),
-                                      ),
-                                    )),
-                                const SizedBox(
-                                  height: 30.0,
-                                ),
-                              ],
-                            )
-                          ],
+                                        child: const Center(
+                                          child: RobotoText(
+                                            text: "Show Invoice",
+                                            size: 16.0,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      )),
+                                  const SizedBox(
+                                    height: 30.0,
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),

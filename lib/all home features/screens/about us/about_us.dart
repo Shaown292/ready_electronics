@@ -5,8 +5,6 @@ import '../../../cart/screen/CartButton.dart';
 import '../../../components/colors.dart';
 import '../../../components/component.dart';
 
-
-
 class AboutUs extends StatefulWidget {
   const AboutUs({Key? key}) : super(key: key);
 
@@ -37,68 +35,94 @@ class _AboutUsState extends State<AboutUs> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Container(
-                height: 100,
-                width: 150,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("assets/image/ready_logo.png"),
-                    fit: BoxFit.contain
-                  )
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 20.0,),
-          const Padding(
-            padding: EdgeInsets.all(15.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+      body: Padding(
+        padding: const EdgeInsets.only(bottom: 40.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
               children: [
-                Column(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text.rich(
-                        TextSpan(
-                          text: 'Ready Electronics ',
-                            style: TextStyle(fontSize: 40, color: custom),
-                            children: <InlineSpan>[
-                              TextSpan(
-                                text: 'is one of the most trusted electronic shop in mirpur',
-                                style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold, color: Colors.black),
-                              )
-                            ],
-
-                        ),
-                    ),
-                    SizedBox(height: 20.0,),
-                    Text.rich(
-                      TextSpan(
-                        text: 'Location: ',
-                        style: TextStyle(fontSize: 20, color: custom),
-                        children: <InlineSpan>[
-                          TextSpan(
-                            text: 'House: 12, Road: 13, Rupnagot R/A, Mirpur Dhaka, Bangladesh 1216',
-                            style: TextStyle(
-                              fontSize: 16,fontWeight: FontWeight.bold, color: Colors.black,),
-                          )
-                        ],
-
-                      ),
+                    Container(
+                      height: 100,
+                      width: 200,
+                      decoration: const BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage("assets/image/ready_logo.png"),
+                              fit: BoxFit.fill)),
                     ),
                   ],
                 ),
-                SizedBox(height: 300,),
-                RobotoText(text: "Copyright © Ready Electronics All rights reserved.", size: 16, fontWeight: FontWeight.w300, color: customAccent,)
+                const Padding(
+                  padding: EdgeInsets.all(15.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text.rich(
+                        TextSpan(
+                          text: 'Ready Electronics ',
+                          style: TextStyle(fontSize: 40, color: custom),
+                          children: <InlineSpan>[
+                            TextSpan(
+                              text:
+                                  'is one of the most trusted electronic shop in mirpur',
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
+                            )
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20.0,
+                      ),
+                      Text.rich(
+                        TextSpan(
+                          text: 'Location: ',
+                          style: TextStyle(fontSize: 20, color: custom),
+                          children: <InlineSpan>[
+                            TextSpan(
+                              text:
+                                  'House: 12, Road: 13, Rupnagot R/A, Mirpur Dhaka, Bangladesh 1216',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
-          ),
-        ],
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10.0),
+              child: Text.rich(
+                TextSpan(
+                  text: 'Copyright © \n',
+                  style: TextStyle(fontSize: 16, color: custom),
+                  children: <InlineSpan>[
+                    TextSpan(
+                      text: 'Ready Electronics All rights reserved.',
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black),
+                    )
+                  ],
+                ),
+              ),
+            ),
+
+            // const RobotoText(text: "Copyright © Ready Electronics All rights reserved.", size: 16.0, fontWeight: FontWeight.w500, color: custom,)
+          ],
+        ),
       ),
     );
   }

@@ -5,6 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:testing_riverpod/components/colors.dart';
+import 'package:testing_riverpod/components/popup_dialogue.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../cart/screen/EmptyCard.dart';
 import '../provider class/Data Class.dart';
@@ -370,8 +372,9 @@ class _CustomCheckBoxState extends State<CustomCheckBox> {
           value: SingingCharacter.jefferson,
           groupValue: _character,
           onChanged: (SingingCharacter? value) {
+            PopupDialogue.show(context: context, header: "Online Payment Method", body: "Online payment is not available at this moment", footer: "close", onTap: ()=> Navigator.pop(context) );
             setState(() {
-              _character = value;
+              _character = null;
             });
           },
         ),
@@ -465,8 +468,12 @@ class Messenger extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        // handle button press
+      onTap: () async{
+       // var url = 'fb://facewebmodal/f?href=https://www.facebook.com/readyelectronics/';
+        var url = 'http://m.me/2599541833404449';
+        if (await canLaunch(url)) {
+        await launch( url, universalLinksOnly: true, );
+        } else { throw 'There was a problem to open the url: $url'; }
       },
       child: Container(
         width: 30.0,

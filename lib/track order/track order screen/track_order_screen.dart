@@ -19,6 +19,8 @@ class _TrackOrderScreenState extends State<TrackOrderScreen> {
 
   TrackOrderController trackOrderController = Get.put(TrackOrderController());
 
+
+
   @override
   void initState() {
     trackOrderController.fetchOrderStatus(widget.trackId);
@@ -26,6 +28,7 @@ class _TrackOrderScreenState extends State<TrackOrderScreen> {
   }
   @override
   Widget build(BuildContext context) {
+    var widthOfTheDevice = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         elevation: 0.5,
@@ -75,19 +78,18 @@ class _TrackOrderScreenState extends State<TrackOrderScreen> {
                   return const Center(child: CircularProgressIndicator(),);
                 }
                 return  Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  // crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-
                     //status
                     Card(
                       elevation: 1,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          const SizedBox(width: 100.0,),
-                          const SizedBox(
-                            width: 200.0,
-                              child: RobotoText(text: "Order Status", size: 16.0, fontWeight: FontWeight.w300, color: custom,)),
+                         SizedBox(width: widthOfTheDevice *0.15),
+                           SizedBox(
+                            width: widthOfTheDevice *0.35,
+                              child: const RobotoText(text: "Order Status", size: 16.0, fontWeight: FontWeight.w300, color: custom,)),
                           RobotoText(text: trackingStatus.trackOrderModel!.orderinfo!.ordertype!.name, size: 16.0, fontWeight: FontWeight.w300, color: Colors.black,),
                         ],
                       ),
@@ -100,10 +102,10 @@ class _TrackOrderScreenState extends State<TrackOrderScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          const SizedBox(width: 100.0,),
-                          const SizedBox(
-                              width: 200.0,
-                              child: RobotoText(text: "Date", size: 16.0, fontWeight: FontWeight.w300, color: custom,)),
+                           SizedBox(width:  widthOfTheDevice *0.15),
+                          SizedBox(
+                              width:  widthOfTheDevice *0.35,
+                              child: const RobotoText(text: "Date", size: 16.0, fontWeight: FontWeight.w300, color: custom,)),
                           RobotoText(text: trackingStatus.trackOrderModel!.orderinfo!.createdAt.toString(), size: 16.0, fontWeight: FontWeight.w300, color: Colors.black,),
                         ],
                       ),
@@ -116,10 +118,10 @@ class _TrackOrderScreenState extends State<TrackOrderScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          const SizedBox(width: 100.0,),
-                          const SizedBox(
-                              width: 200.0,
-                              child: RobotoText(text: "Total Amount:", size: 16.0, fontWeight: FontWeight.w300, color: custom,)),
+                          SizedBox(width:  widthOfTheDevice *0.15),
+                        SizedBox(
+                            width:  widthOfTheDevice *0.35,
+                            child: const RobotoText(text: "Total Amount", size: 16.0, fontWeight: FontWeight.w300, color: custom,)),
                           RobotoText(text: trackingStatus.trackOrderModel!.orderinfo!.orderTotal, size: 16.0, fontWeight: FontWeight.w300, color: Colors.black,),
                         ],
                       ),
@@ -132,10 +134,10 @@ class _TrackOrderScreenState extends State<TrackOrderScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          const SizedBox(width: 100.0,),
-                          const SizedBox(
-                              width: 200.0,
-                              child: RobotoText(text: "Discount :", size: 16.0, fontWeight: FontWeight.w300, color: custom,)),
+                          SizedBox(width:  widthOfTheDevice *0.15),
+                          SizedBox(
+                              width:  widthOfTheDevice *0.35,
+                              child: const RobotoText(text: "Discount", size: 16.0, fontWeight: FontWeight.w300, color: custom,)),
                           RobotoText(text: trackingStatus.trackOrderModel!.orderinfo!.discount, size: 16.0, fontWeight: FontWeight.w300, color: Colors.black,),
                         ],
                       ),
@@ -148,10 +150,10 @@ class _TrackOrderScreenState extends State<TrackOrderScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          const SizedBox(width: 100.0,),
-                          const SizedBox(
-                              width: 200.0,
-                              child: RobotoText(text: "Tracking ID", size: 16.0, fontWeight: FontWeight.w300, color: custom,)),
+                          SizedBox(width:  widthOfTheDevice *0.15),
+                          SizedBox(
+                              width:  widthOfTheDevice *0.35,
+                              child: const RobotoText(text: "Tracking ID", size: 16.0, fontWeight: FontWeight.w300, color: custom,)),
                           RobotoText(text: trackingStatus.trackOrderModel!.orderinfo!.trackingId, size: 16.0, fontWeight: FontWeight.w300, color: Colors.black,),
                         ],
                       ),

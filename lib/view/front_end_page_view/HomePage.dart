@@ -5,6 +5,7 @@ import 'package:testing_riverpod/cart/controller/cart_controller.dart';
 import 'package:testing_riverpod/data/local%20data/favorite%20data.dart';
 import 'package:testing_riverpod/display%20order/display_order_controller.dart';
 import 'package:testing_riverpod/dropdown/controller/dropdown_controller.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../all home features/controller/brand controller/brand controller.dart';
 import '../../all home features/controller/features product controller/features_product_controller.dart';
 import '../../all home features/controller/flash sell controller/flash_sell_controller.dart';
@@ -22,6 +23,7 @@ import '../../cart/screen/CartButton.dart';
 import '../../components/colors.dart';
 import '../../components/component.dart';
 import '../../data/local data/cart_data_controller.dart';
+import '../../search/screen/Search Page.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -117,9 +119,9 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                             ),
-                            // onTap: () {
-                            //   Navigator.push(context, MaterialPageRoute(builder: (context)=>  const SearchPage()));
-                            // },
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>  const SearchPage()));
+                            },
                           ),
                         ),
                       ),
@@ -136,12 +138,6 @@ class _HomePageState extends State<HomePage> {
                       size: 13.0,
                       fontWeight: FontWeight.w500,
                     ),
-                    // RobotoText(
-                    //   text: "View all",
-                    //   size: 13.0,
-                    //   fontWeight: FontWeight.w200,
-                    //   color: custom,
-                    // ),
                   ],
                 ),
                 const SizedBox(height: 10.0,),
@@ -173,29 +169,40 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(height: 10.0),
                 const FlashSellView(),
                 const SizedBox(height: 10.0),
-                Container(
-                  width: widthOfTheDevice,
-                  height: 30.0,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(7.0),
-                    border: Border.all(
-                      color: custom,
-                      width: 1.0,
+                GestureDetector(
+                  onTap: () async {
+                      var url = 'https://www.youtube.com/watch?v=O1tsugTLdPs';
+                      if (await canLaunch(url)) {
+                        await launch( url, universalLinksOnly: true, );
+                      } else { throw 'There was a problem to open the url: $url'; }
+
+                  },
+                  child: Container(
+                    width: widthOfTheDevice,
+                    height: 30.0,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(7.0),
+                      border: Border.all(
+                        color: custom,
+                        width: 1.0,
+                      ),
                     ),
-                  ),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.play_arrow,
-                        color: custom,
-                      ),
-                      OpenSans(
-                        text: "How to order from Ready Electronics?",
-                        size: 13.0,
-                        color: custom,
-                      ),
-                    ],
+                    child:  const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                         Icon(
+                            Icons.play_arrow,
+                            color: custom,
+                          ),
+
+                        RobotoText(
+                          text: "How to order from Ready Electronics?",
+                          size: 13.0,
+                          color: custom,
+                          fontWeight: FontWeight.w300,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 const SizedBox(

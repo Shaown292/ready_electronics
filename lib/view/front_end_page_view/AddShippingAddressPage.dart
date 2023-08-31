@@ -23,7 +23,8 @@ import 'log in.dart';
 import 'edit_profile_page.dart';
 
 class AddShippingAddressPage extends StatefulWidget {
-  const AddShippingAddressPage({Key? key}) : super(key: key);
+  const AddShippingAddressPage({Key? key, this.total}) : super(key: key);
+  final String? total;
 
   @override
   State<AddShippingAddressPage> createState() => _AddShippingAddressPageState();
@@ -224,35 +225,35 @@ class _AddShippingAddressPageState extends State<AddShippingAddressPage> {
                   ],
                 ),
                 const SizedBox(height: 40.0),
-                Center(
-                  child: Container(
-                    height: 50,
-                    width: 120,
-                    padding: const EdgeInsets.all(10.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      color: custom,
-                    ),
+                GestureDetector(
+                  onTap: (){
 
-                    child: GestureDetector(
-                      onTap: () {
-
-                        String name = nameController.text;
-                        String address = addressController.text;
-                        MySharedPreferences.setStringData(key: SharedRefName.name, data: name);
-                        MySharedPreferences.setStringData(key:SharedRefName.address, data: address);
-
-                        userLoggedIn();
-                      },
-                      child: Center(
-                        child: Text('Save', style: GoogleFonts.roboto(
-                          textStyle: const TextStyle(
-                            fontSize: 18.0,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),),
+                    userLoggedIn();
+                    String name = nameController.text;
+                    String address = addressController.text;
+                    MySharedPreferences.setStringData(key: SharedRefName.name, data: name);
+                    MySharedPreferences.setStringData(key:SharedRefName.address, data: address);
+                  },
+                  child: Center(
+                    child: Container(
+                      height: 50,
+                      width: 120,
+                      padding: const EdgeInsets.all(10.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                        color: custom,
                       ),
+
+                        child: Center(
+                          child: Text('Save', style: GoogleFonts.roboto(
+                            textStyle: const TextStyle(
+                              fontSize: 18.0,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),),
+                        ),
+
                     ),
                   ),
                 ),
@@ -272,7 +273,7 @@ class _AddShippingAddressPageState extends State<AddShippingAddressPage> {
 
     if (isLogIn == true) {
 
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> CheckOutPage()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> CheckOutPage(total: widget.total,)));
     }
 
     else {

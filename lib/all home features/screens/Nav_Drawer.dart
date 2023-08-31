@@ -4,10 +4,11 @@ import 'package:http/http.dart';
 import 'package:simple_fontellico_progress_dialog/simple_fontico_loading.dart';
 import 'package:testing_riverpod/components/component.dart';
 import 'package:testing_riverpod/view/front_end_page_view/AddShippingAddressPage.dart';
+import 'package:testing_riverpod/view/front_end_page_view/edit_profile_page.dart';
 import 'package:testing_riverpod/view/front_end_page_view/favorite%20page.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 import 'package:url_launcher/url_launcher.dart';
-import '../../components/AlertBox.dart';
+import '../../components/popup_dialogue.dart';
 import '../../components/colors.dart';
 import '../../components/progress bar.dart';
 import '../../components/snack_bar.dart';
@@ -129,7 +130,7 @@ class NavDrawerState extends State<NavDrawer> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const ProfilePageView()));
+                        builder: (context) => const EditProfilePage()));
               },
               child: const Row(
                 children: [
@@ -321,13 +322,12 @@ class NavDrawerState extends State<NavDrawer> {
             //Facebook
             GestureDetector(
               onTap: () async {
-                const url = 'https://www.facebook.com/readyelectronics/';
+
+                var url = 'fb://facewebmodal/f?href=https://www.facebook.com/readyelectronics/';
                 if (await canLaunch(url)) {
-                  await launch(url,
-                      forceWebView: false, enableJavaScript: true);
-                } else {
-                  throw 'Could not launch $url';
-                }
+                  await launch( url, universalLinksOnly: true, );
+                } else { throw 'There was a problem to open the url: $url'; }
+
               },
               child: const Row(
                 children: [
