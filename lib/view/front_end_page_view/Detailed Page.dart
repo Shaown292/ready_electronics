@@ -98,13 +98,13 @@ class _DetailedPageState extends State<DetailedPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  height: MediaQuery.of(context).size.height / 1.7,
+                  height: MediaQuery.of(context).size.width,
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
                     image: DecorationImage(
                         image: NetworkImage(
                             "https://readyelectronics.com.bd/${widget.image}"),
-                        fit: BoxFit.fill),
+                        fit: BoxFit.contain),
                   ),
                 ),
                 const SizedBox(
